@@ -1,59 +1,89 @@
-import RippleGrid from "./RippleGrid";
-import TrueFocus from "./TrueFocus";
-import { motion } from "framer-motion";
+import Threads from "./Threads";
+import RotatingText from "./RotatingText";
 
 export default function Hero() {
   return (
-    <section
-      className="relative w-full min-h-screen overflow-hidden"
-      style={{ backgroundColor: "#0b0f19" }}
-    >
-      {/* BACKGROUND EFFECT (Aurora via RippleGrid) */}
+    <section className="relative h-screen w-full overflow-hidden bg-black">
+
+      {/* Threads Background */}
       <div className="absolute inset-0 z-0">
-        <RippleGrid
-          colorStops={["#154d0bff", "#459ed6ff", "#0c4084ff"]}
-          amplitude={0.9}
-          blend={0.7}
-          speed={0.5}
+        <Threads
+          amplitude={1}
+          distance={0}
+          enableMouseInteraction={true}
         />
       </div>
 
-      {/* DARK OVERLAY so text is readable */}
-      <div className="absolute inset-0 z-[1] bg-black/60" />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60 z-[1]" />
 
-      {/* CONTENT */}
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center text-white">
-        
-        <TrueFocus
-          sentence="Build True Focused Products"
-          blurAmount={4}
-        />
+      {/* Hero Content */}
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-white">
 
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-6 max-w-2xl text-lg text-gray-300"
+        {/* Heading */}
+        <h1 className="text-5xl md:text-7xl font-extrabold leading-tight flex flex-wrap items-center justify-center gap-4">
+
+          <span className="hero-glow">Build</span>
+
+          <RotatingText
+            texts={["High-Impact", "Future-Ready", "Scalable", "Modern"]}
+            mainClassName="text-rotate-glass px-3"
+            staggerFrom="last"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-120%" }}
+            staggerDuration={0.025}
+            splitLevelClassName="overflow-hidden"
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={2000}
+          />
+
+          <span className="hero-glow">Products</span>
+        </h1>
+
+        {/* Subtext (NO BOX, ONLY GLOW) */}
+        <p
+          className="
+            mt-8 max-w-3xl
+            text-gray-300 text-lg md:text-xl
+            leading-relaxed
+            hero-subtext
+          "
         >
-          Sammunat helps startups and businesses design, develop,
-          and scale modern digital products with clarity and purpose.
-        </motion.p>
+          Sammunat helps startups and businesses design, develop, and scale
+          modern digital experiences.
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-          className="mt-10 flex flex-col gap-5 sm:flex-row"
-        >
-          <button className="rounded-lg bg-blue-600 px-8 py-3 font-medium transition hover:scale-105 hover:bg-blue-500">
+        {/* CTA BUTTONS – PUSHED LOWER */}
+        <div className="mt-20 md:mt-24 flex flex-col sm:flex-row gap-8">
+
+          <button
+            className="
+              px-8 py-3 rounded-lg font-medium text-white
+              bg-gradient-to-r from-blue-500 to-violet-600
+              hover:scale-105 transition-all duration-300
+              shadow-lg
+            "
+          >
             Get Consultation
           </button>
 
-          <button className="rounded-lg border border-white/30 px-8 py-3 font-medium transition hover:bg-white hover:text-black">
-            View Services
+          <button
+            className="
+              px-8 py-3 border border-white/30 rounded-lg font-medium
+              hover:bg-white hover:text-black
+              transition-all duration-300
+            "
+          >
+            Get Started
           </button>
-        </motion.div>
+
+        </div>
       </div>
     </section>
   );
 }
+
+
+
+

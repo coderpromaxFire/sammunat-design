@@ -11,3 +11,13 @@ body {
   font-family: "Space Grotesk", sans-serif;
 }
 
+/* Soft glow for hero text (Build, Products, subtext) */
+/* Glow effect for hero subtext (NO BOX) */
+.hero-subtext {
+  text-shadow:
+    0 0 6px rgba(99, 102, 241, 0.35),
+    0 0 14px rgba(139, 92, 246, 0.25);
+}
+
+
+
