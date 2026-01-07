@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Dock from "./Dock";
 import HiringModal from "./HiringModal";
+import SearchOverlay from "./SearchOverlay";
 import {
   VscHome,
   VscArchive,
@@ -13,9 +14,8 @@ import {
 } from "react-icons/vsc";
 
 export default function Navbar({ showSearch = true }) {
-  const scrollTo = (id) =>
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
+  const [query, setQuery] = useState("");
+  const [showOverlay, setShowOverlay] = useState(false);
   const [showDock, setShowDock] = useState(true);
   const [openHiring, setOpenHiring] = useState(false);
 
@@ -28,59 +28,61 @@ export default function Navbar({ showSearch = true }) {
   }, []);
 
   const dockItems = [
-    { icon: <VscHome />, label: "Home", onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
-    { icon: <VscArchive />, label: "Services", onClick: () => scrollTo("services") },
-    { icon: <VscBook />, label: "Blog", onClick: () => scrollTo("blog") },
-    { icon: <VscAccount />, label: "About", onClick: () => scrollTo("about") },
-    { icon: <VscSettingsGear />, label: "Contact", onClick: () => scrollTo("contact") }
+    { icon: <VscHome />, label: "Home", onClick: () => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" }) },
+    { icon: <VscArchive />, label: "Services", onClick: () => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" }) },
+    { icon: <VscBook />, label: "Blog", onClick: () => document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" }) },
+    { icon: <VscAccount />, label: "About", onClick: () => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }) },
+    { icon: <VscSettingsGear />, label: "Contact", onClick: () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }) }
   ];
 
   return (
     <>
-      {/* NAVBAR */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
         <div className="max-w-7xl mx-auto px-4 h-12 md:h-16 flex items-center justify-between gap-3">
 
-          {/* Logo */}
           <div
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })}
             className="cursor-pointer text-lg md:text-2xl font-extrabold text-[#534D56]"
           >
             Sammu<span className="text-[#1B998B]">nat</span>
           </div>
 
-          {/* Search (VISIBLE ON MOBILE) */}
           {showSearch && (
             <div className="flex items-center gap-2 bg-white rounded-full px-3 py-1 text-sm text-[#656176] border border-[#534D56]/10 w-full max-w-[160px] md:max-w-[260px]">
               <VscSearch />
               <input
-                type="text"
-                placeholder="Search…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setShowOverlay(true);
+                  }
+                }}
+                placeholder="Search anything..."
                 className="bg-transparent outline-none w-full"
               />
             </div>
           )}
 
-          {/* CTA (smaller on mobile) */}
           <button
             onClick={() => setOpenHiring(true)}
-            className="
-              px-3 py-1.5
-              md:px-6 md:py-2
-              rounded-full
-              bg-[#1B998B]
-              text-white
-              text-xs md:text-base
-              font-semibold
-              whitespace-nowrap
-            "
+            className="px-3 py-1.5 md:px-6 md:py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold"
           >
             Hiring
           </button>
         </div>
       </header>
 
-      {/* DESKTOP DOCK */}
+      {showOverlay && (
+        <SearchOverlay
+          query={query}
+          onClose={() => {
+            setShowOverlay(false);
+            setQuery("");
+          }}
+        />
+      )}
+
       {showDock && (
         <nav className="hidden md:flex fixed bottom-6 left-0 right-0 z-40 justify-center">
           <Dock
@@ -97,6 +99,7 @@ export default function Navbar({ showSearch = true }) {
     </>
   );
 }
+
 
 
 
