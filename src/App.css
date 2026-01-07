@@ -1,148 +1,45 @@
-/* ========================= */
-/* ROOT & GLOBAL BASE */
-/* ========================= */
-
-
-:root {
-  --bg-main: #070b14;
-  --bg-secondary: #0b1020;
-  --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
-  --accent-blue: #3b82f6;
-  --accent-violet: #8b5cf6;
-}
-
 * {
   box-sizing: border-box;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  background: radial-gradient(
-      1200px 600px at 50% -200px,
-      rgba(59, 130, 246, 0.15),
-      transparent
-    ),
-    linear-gradient(to bottom, var(--bg-main), var(--bg-secondary));
-  color: var(--text-primary);
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   scroll-behavior: smooth;
 }
 
-/* ========================= */
-/* ROOT CONTAINER */
-/* ========================= */
-
+/* Root container */
 #root {
   min-height: 100vh;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: left;
   overflow-x: hidden;
 }
 
-/* ========================= */
-/* LOGO (IMPROVED) */
-/* ========================= */
-
-.logo {
-  height: 5em;
-  padding: 1.2em;
-  will-change: transform, filter;
-  transition: transform 0.4s ease, filter 0.4s ease;
-}
-
-.logo:hover {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 1.5em rgba(99, 102, 241, 0.8));
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 1.5em rgba(97, 218, 251, 0.8));
-}
-
-/* ========================= */
-/* LOGO ANIMATION */
-/* ========================= */
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 18s linear;
-  }
-}
-
-/* ========================= */
-/* CARD (GENERIC UI CARD) */
-/* ========================= */
-
+/* Card system */
 .card {
-  padding: 2.5em;
+  background: #DECDF5;
   border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.05);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(83, 77, 86, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 20px 60px rgba(59, 130, 246, 0.35),
-    inset 0 0 25px rgba(255, 255, 255, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(83, 77, 86, 0.18);
 }
 
-/* ========================= */
-/* TEXT STYLES */
-/* ========================= */
-
-.read-the-docs {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-}
-
-/* ========================= */
-/* SELECTION */
-/* ========================= */
-
-::selection {
-  background: rgba(139, 92, 246, 0.4);
-  color: white;
-}
-
-/* ========================= */
-/* SCROLLBAR (OPTIONAL) */
-/* ========================= */
-
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #05070f;
+  background: #F8F1FF;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    to bottom,
-    var(--accent-blue),
-    var(--accent-violet)
-  );
+  background: #1B998B;
   border-radius: 10px;
 }
+
+
 

@@ -1,168 +1,111 @@
+'use client';
+
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import Dock from "./Dock";
+import HiringModal from "./HiringModal";
+import {
+  VscHome,
+  VscArchive,
+  VscAccount,
+  VscSettingsGear,
+  VscBook,
+  VscSearch
+} from "react-icons/vsc";
 
-const links = ["Services", "Process", "About", "Contact"];
+export default function Navbar({ showSearch = true }) {
+  const scrollTo = (id) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [hovered, setHovered] = useState(null);
+  const [showDock, setShowDock] = useState(true);
+  const [query, setQuery] = useState("");
+  const [openHiring, setOpenHiring] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setShowDock(window.scrollY < window.innerHeight * 0.85);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = query.toLowerCase().trim();
+    if (!q) return;
+
+    if (q.includes("service")) scrollTo("services");
+    else if (q.includes("about")) scrollTo("about");
+    else if (q.includes("contact")) scrollTo("contact");
+    else if (q.includes("blog")) scrollTo("blog");
+
+    setQuery("");
+  };
+
+  const dockItems = [
+    { icon: <VscHome size={20} />, label: "Home", onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
+    { icon: <VscArchive size={20} />, label: "Services", onClick: () => scrollTo("services") },
+    { icon: <VscBook size={20} />, label: "Blog", onClick: () => scrollTo("blog") },
+    { icon: <VscAccount size={20} />, label: "About", onClick: () => scrollTo("about") },
+    { icon: <VscSettingsGear size={20} />, label: "Contact", onClick: () => scrollTo("contact") }
+  ];
+
   return (
-    <motion.nav
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: "easeOut" }}
-      className={`
-        fixed top-0 left-0 w-full z-50
-        transition-all duration-500
-        ${scrolled
-          ? "backdrop-blur-xl bg-black/60 border-b border-white/10"
-          : "bg-transparent"}
-      `}
-    >
-      {/* Top gradient rail – fade only */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: scrolled ? 1 : 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="
-          h-[3px] w-full
-          bg-gradient-to-r from-blue-500 via-violet-500 to-pink-500
-        "
-      />
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
 
-      <div className="max-w-7xl mx-auto px-10 py-6 flex items-center justify-between">
-
-        {/* LOGO */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-          whileHover={{ scale: 1.03 }}
-          className="relative cursor-pointer group"
-        >
-          <span
-            className="
-              heading-font text-3xl font-extrabold tracking-tight
-              bg-gradient-to-r from-blue-400 to-violet-500
-              bg-clip-text text-transparent
-            "
+          <div
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="cursor-pointer text-2xl font-extrabold text-[#534D56]"
           >
-            Sammunat
-          </span>
+            Sammu<span className="text-[#1B998B]">nat</span>
+          </div>
 
-          {/* subtle glow */}
-          <span
-            className="
-              absolute inset-0 blur-xl opacity-0
-              group-hover:opacity-50
-              bg-gradient-to-r from-blue-500 to-violet-500
-              transition duration-500
-            "
+          {showSearch && (
+            <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md">
+              <div className="relative w-full">
+                <VscSearch
+                  size={18}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#656176]"
+                />
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search services, blogs..."
+                  className="w-full pl-10 pr-4 py-2 rounded-full border border-[#534D56]/20 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B998B]"
+                />
+              </div>
+            </form>
+          )}
+
+          <button
+            onClick={() => setOpenHiring(true)}
+            className="px-6 py-2 rounded-full bg-[#1B998B] text-white font-semibold shadow-lg hover:scale-105 transition"
+          >
+            We’re Hiring 🚀
+          </button>
+        </div>
+      </header>
+
+      {showDock && (
+        <nav className="fixed bottom-6 left-0 right-0 z-40 flex justify-center">
+          <Dock
+            items={dockItems}
+            panelHeight={70}
+            baseItemSize={52}
+            magnification={74}
+            distance={200}
           />
-        </motion.div>
+        </nav>
+      )}
 
-        {/* NAV LINKS – soft stagger fade */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.15 }
-            }
-          }}
-          className="hidden md:flex items-center gap-14 relative"
-        >
-          {links.map((link, i) => (
-            <motion.div
-              key={link}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1 }
-              }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="relative group cursor-pointer"
-            >
-              {/* hover bg */}
-              <span
-                className={`
-                  absolute inset-x-[-14px] inset-y-[-10px]
-                  rounded-xl
-                  bg-gradient-to-r from-blue-500/15 to-violet-500/15
-                  transition-all duration-300
-                  ${hovered === i ? "opacity-100" : "opacity-0"}
-                `}
-              />
-
-              <span
-                className="
-                  relative z-10 heading-font text-lg font-medium
-                  text-gray-300 group-hover:text-white
-                  transition duration-300
-                "
-              >
-                {link}
-              </span>
-
-              {/* underline */}
-              <span
-                className={`
-                  absolute left-0 -bottom-2 h-[2px]
-                  bg-gradient-to-r from-blue-500 to-violet-500
-                  transition-all duration-300
-                  ${hovered === i ? "w-full" : "w-0"}
-                `}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* CTA BUTTON – gentle */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="
-            relative px-9 py-3 rounded-full
-            text-base font-semibold text-white
-            overflow-hidden group
-          "
-        >
-          {/* bg */}
-          <span className="
-            absolute inset-0
-            bg-gradient-to-r from-blue-600 to-violet-600
-          " />
-
-          {/* soft glow */}
-          <span className="
-            absolute inset-0 blur-xl opacity-0
-            group-hover:opacity-60
-            bg-gradient-to-r from-blue-500 to-violet-500
-            transition duration-500
-          " />
-
-          <span className="relative z-10">
-            Get Started
-          </span>
-        </motion.button>
-
-      </div>
-    </motion.nav>
+      <HiringModal
+        open={openHiring}
+        onClose={() => setOpenHiring(false)}
+      />
+    </>
   );
 }
-
-
-
 
 
 

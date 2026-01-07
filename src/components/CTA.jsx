@@ -1,82 +1,188 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function CTA() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: ""
+  });
+
+  const [status, setStatus] = useState("idle");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      await fetch(
+        "https://script.google.com/macros/s/AKfycbx7tYuT-wecDTvCn_Lk-PjGu7nJoOP8vA8wTYN_QEOtx2jHCAuESXlzxzorKmjUCXQFEg/exec",
+        {
+          method: "POST",
+          body: JSON.stringify(form)
+        }
+      );
+
+      setStatus("success");
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
-    <section className="relative py-32 text-center overflow-hidden">
+    <section
+      id="contact"
+      className="relative py-32 px-6 bg-[#F8F1FF] overflow-hidden"
+    >
+      {/* 🔹 DOT WALLPAPER */}
+      <div
+        className="
+          absolute inset-0
+          opacity-[0.3]
+          bg-[radial-gradient(circle_at_1px_1px,#1B998B_1.4px,transparent_1.4px)]
+          [background-size:26px_26px]
+        "
+      />
 
-      {/* soft background glow */}
-      <div className="
-        absolute inset-0
-        bg-gradient-to-b from-transparent via-blue-500/10 to-transparent
-        pointer-events-none
-      " />
+      {/* 🔹 FLOATING CHAT ICONS */}
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 22 }).map((_, i) => {
+          const float = 18 + Math.random() * 16;
+          const duration = 10 + Math.random() * 6;
+          const size = 18 + Math.random() * 12;
 
-      {/* content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="relative z-10"
-      >
-        {/* heading */}
-        <motion.h2
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
-          className="
-            text-4xl md:text-5xl font-extrabold mb-8
-            bg-gradient-to-r from-blue-400 to-violet-500
-            bg-clip-text text-transparent
-            hero-glow
-          "
+          return (
+            <motion.span
+              key={i}
+              initial={{ y: 0 }}
+              animate={{ y: [-float, float, -float] }}
+              transition={{
+                duration,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute text-[#1B998B]/35 select-none"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                fontSize: `${size}px`
+              }}
+            >
+              💬
+            </motion.span>
+          );
+        })}
+      </div>
+
+      {/* 🔹 SOFT BLOBS */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[#1B998B]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#DECDF5] rounded-full blur-3xl" />
+      </div>
+
+      {/* CONTENT */}
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center z-10">
+
+        {/* LEFT CONTENT */}
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+          viewport={{ once: true }}
         >
-          Let’s Build Something Amazing
-        </motion.h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#534D56] mb-6">
+            Let’s Build Something
+            <span className="text-[#1B998B]"> Meaningful</span>
+          </h2>
 
-        {/* subtext */}
-        <p className="max-w-xl mx-auto text-gray-400 mb-14 text-lg leading-relaxed">
-          Have an idea or a product in mind? Let’s collaborate and turn it into
-          something exceptional.
-        </p>
+          <p className="text-[#656176] text-lg max-w-md">
+            Have an idea, startup, or product in mind?
+            Tell us about it — we’ll help you turn it into reality.
+          </p>
 
-        {/* CTA button */}
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="
-            relative px-12 py-4 rounded-full
-            text-lg font-semibold text-white
-            overflow-hidden group
-          "
+          <ul className="mt-8 space-y-4 text-[#656176]">
+            <li>✔ Clean & modern solutions</li>
+            <li>✔ Scalable architecture</li>
+            <li>✔ Human-centered design</li>
+          </ul>
+        </motion.div>
+
+        {/* RIGHT FORM */}
+        <motion.div
+          initial={{ opacity: 0, x: 60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9 }}
+          viewport={{ once: true }}
+          className="bg-[#DECDF5] rounded-2xl p-8 shadow-xl"
         >
-          {/* background */}
-          <span className="
-            absolute inset-0
-            bg-gradient-to-r from-blue-600 to-violet-600
-          " />
+          {status === "success" ? (
+            <p className="text-green-600 font-medium text-center">
+              ✅ Message sent successfully!
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                placeholder="Your Name"
+                className="w-full px-4 py-3 rounded-lg"
+              />
 
-          {/* glow */}
-          <span className="
-            absolute inset-0 blur-xl opacity-0
-            group-hover:opacity-70
-            bg-gradient-to-r from-blue-500 to-violet-500
-            transition duration-500
-          " />
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="Email Address"
+                className="w-full px-4 py-3 rounded-lg"
+              />
 
-          {/* shine sweep */}
-          <span className="
-            absolute inset-0 translate-x-[-120%]
-            group-hover:translate-x-[120%]
-            transition-transform duration-700
-            bg-white/20 skew-x-12
-          " />
+              <input
+                name="phone"
+                type="tel"
+                value={form.phone}
+                onChange={handleChange}
+                required
+                placeholder="Phone Number"
+                className="w-full px-4 py-3 rounded-lg"
+              />
 
-          <span className="relative z-10">
-            Contact Us
-          </span>
-        </motion.button>
-      </motion.div>
+              <textarea
+                name="message"
+                rows="4"
+                value={form.message}
+                onChange={handleChange}
+                required
+                placeholder="Message"
+                className="w-full px-4 py-3 rounded-lg resize-none"
+              />
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.96 }}
+                className="w-full py-4 bg-[#1B998B] text-white rounded-lg font-semibold"
+              >
+                {status === "loading" ? "Sending..." : "Send Message"}
+              </motion.button>
+
+              {status === "error" && (
+                <p className="text-red-500 text-sm text-center">
+                  Something went wrong. Please try again.
+                </p>
+              )}
+            </form>
+          )}
+        </motion.div>
+      </div>
     </section>
   );
 }

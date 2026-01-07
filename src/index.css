@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  scroll-behavior: smooth;
+}
 
 body {
+  margin: 0;
+  background: #F8F1FF;
+  color: #534D56;
   font-family: "Inter", system-ui, sans-serif;
 }
 
-.heading-font {
-  font-family: "Space Grotesk", sans-serif;
-}
-
-/* Soft glow for hero text (Build, Products, subtext) */
-/* Glow effect for hero subtext (NO BOX) */
-.hero-subtext {
-  text-shadow:
-    0 0 6px rgba(99, 102, 241, 0.35),
-    0 0 14px rgba(139, 92, 246, 0.25);
+/* Fix for fixed navbar */
+section {
+  scroll-margin-top: 80px;
 }
 
 

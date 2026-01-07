@@ -2,82 +2,48 @@ import Threads from "./Threads";
 import RotatingText from "./RotatingText";
 
 export default function Hero() {
-  return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
+  const scrollTo = (id) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
-      {/* Threads Background */}
-      <div className="absolute inset-0 z-0">
+  return (
+    <section className="relative min-h-screen bg-[#F8F1FF] overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-35">
         <Threads
-          amplitude={1}
+          color={[27 / 255, 153 / 255, 139 / 220]}
+          amplitude={0.5}
           distance={0}
-          enableMouseInteraction={true}
+          enableMouseInteraction
         />
       </div>
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60 z-[1]" />
-
-      {/* Hero Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6 text-white">
-
-        {/* Heading */}
-        <h1 className="text-5xl md:text-7xl font-extrabold leading-tight flex flex-wrap items-center justify-center gap-4">
-
-          <span className="hero-glow">Build</span>
-
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold flex gap-3 text-[#534D56]">
+          Build
           <RotatingText
             texts={["High-Impact", "Future-Ready", "Scalable", "Modern"]}
-            mainClassName="text-rotate-glass px-3"
-            staggerFrom="last"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-120%" }}
-            staggerDuration={0.025}
-            splitLevelClassName="overflow-hidden"
-            transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            rotationInterval={2000}
           />
-
-          <span className="hero-glow">Products</span>
+          Products
         </h1>
 
-        {/* Subtext (NO BOX, ONLY GLOW) */}
-        <p
-          className="
-            mt-8 max-w-3xl
-            text-gray-300 text-lg md:text-xl
-            leading-relaxed
-            hero-subtext
-          "
-        >
-          Sammunat helps startups and businesses design, develop, and scale
-          modern digital experiences.
+        <p className="mt-6 max-w-2xl text-[#656176]">
+          Sammunat helps startups and businesses design, develop,
+          and scale thoughtful digital experiences.
         </p>
 
-        {/* CTA BUTTONS – PUSHED LOWER */}
-        <div className="mt-20 md:mt-24 flex flex-col sm:flex-row gap-8">
-
+        <div className="mt-12 flex gap-5">
           <button
-            className="
-              px-8 py-3 rounded-lg font-medium text-white
-              bg-gradient-to-r from-blue-500 to-violet-600
-              hover:scale-105 transition-all duration-300
-              shadow-lg
-            "
+            onClick={() => scrollTo("contact")}
+            className="px-8 py-3 rounded-lg bg-[#1B998B] text-white font-semibold"
           >
             Get Consultation
           </button>
 
           <button
-            className="
-              px-8 py-3 border border-white/30 rounded-lg font-medium
-              hover:bg-white hover:text-black
-              transition-all duration-300
-            "
+            onClick={() => scrollTo("services")}
+            className="px-8 py-3 rounded-lg border border-[#1B998B] text-[#1B998B]"
           >
             Get Started
           </button>
-
         </div>
       </div>
     </section>

@@ -1,50 +1,16 @@
-/* ============================= */
-/* GLASS CONTAINER – ONE BOX */
-/* ============================= */
 .text-rotate-glass {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
   padding: 0.35rem 0.7rem;
   border-radius: 14px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.18),
-    rgba(255, 255, 255, 0.06)
-  );
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border: 1px solid rgba(255, 255, 255, 0.25);
-
-  box-shadow:
-    0 0 18px rgba(99, 102, 241, 0.35),
-    inset 0 0 12px rgba(255, 255, 255, 0.1);
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #DECDF5;
+  border: 1px solid rgba(83, 77, 86, 0.15);
 }
 
-.text-rotate-glass:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow:
-    0 0 30px rgba(99, 102, 241, 0.7),
-    0 0 60px rgba(139, 92, 246, 0.5);
-}
-
-/* ============================= */
-/* FIX DOUBLE TEXT ISSUE */
-/* ============================= */
 .text-rotate,
 .text-rotate-lines {
   display: contents;
 }
 
-/* ============================= */
-/* WORD / CHAR STRUCTURE */
-/* ============================= */
 .text-rotate-word {
   display: inline-flex;
 }
@@ -53,45 +19,17 @@
   white-space: pre;
 }
 
-/* ============================= */
-/* GRADIENT TEXT + COOL GLOW */
-/* ============================= */
 .text-rotate-element {
-  display: inline-block;
-
-  background: linear-gradient(
-    90deg,
-    #3b82f6,   /* blue */
-    #6366f1,   /* indigo */
-    #8b5cf6    /* violet */
-  );
-
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-
-  text-shadow:
-    0 0 10px rgba(99, 102, 241, 0.35),
-    0 0 20px rgba(139, 92, 246, 0.25);
-
-  transition: filter 0.3s ease, text-shadow 0.3s ease;
+  color: #1B998B;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(42, 144, 11, 0.25);
 }
 
-/* Stronger glow on hover */
-.text-rotate-glass:hover .text-rotate-element {
-  filter: brightness(1.15);
-  text-shadow:
-    0 0 14px rgba(99, 102, 241, 0.6),
-    0 0 30px rgba(139, 92, 246, 0.45);
-}
-
-/* Screen reader only */
 .text-rotate-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
 }
 
 
