@@ -41,7 +41,7 @@ export default function Hero() {
         >
           Build
           <RotatingText
-            texts={["High-Impact", "Future-Ready", "Scalable", "Modern"]}
+            texts={["Impactful", "Futuristic", "Scalable", "Modern"]}
           />
           Products
         </h1>
