@@ -77,7 +77,7 @@ export default function Navbar({ showSearch = true }) {
             onClick={() => setOpenHiring(true)}
             className="px-3 py-1.5 md:px-6 md:py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold"
           >
-            Hiring
+            We'r Hiring
           </button>
         </div>
       </header>
