@@ -66,7 +66,7 @@ export default function Navbar({ showSearch = true }) {
                     setShowOverlay(true);
                   }
                 }}
-                placeholder="Search anything..."
+                placeholder="Search......"
                 className="bg-transparent outline-none w-full"
               />
             </div>
