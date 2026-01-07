@@ -57,7 +57,7 @@ export default function Hero() {
             text-[#656176]
           "
         >
-          Sammunat helps startups and businesses design, develop,
+          Sammunat LLC helps startups and businesses design, develop,
           and scale thoughtful digital experiences.
         </p>
 
