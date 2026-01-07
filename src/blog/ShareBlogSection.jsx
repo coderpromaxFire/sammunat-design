@@ -1,50 +1,48 @@
-// src/blog/ShareBlogSection.jsx
+import { useParams, Link } from "react-router-dom";
+import { useBlogs } from "./useBlogs";
 
-import { motion } from "framer-motion";
+export default function BlogPost() {
+  const { slug } = useParams();
+  const { blogs, loading } = useBlogs();
 
-export default function ShareBlogSection() {
+  if (loading) {
+    return (
+      <div className="py-20 text-center text-[#656176]">
+        Loading content...
+      </div>
+    );
+  }
+
+  const blog = blogs.find(b => b.slug === slug);
+
+  if (!blog) {
+    return (
+      <div className="py-20 text-center text-[#656176]">
+        Blog not found
+      </div>
+    );
+  }
+
   return (
-    <section className="py-32 px-6 bg-[#F8F1FF]">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-3xl mx-auto text-center"
+    <article className="max-w-3xl mx-auto py-20 md:py-32 px-4 md:px-6">
+      <h1 className="text-3xl md:text-5xl font-extrabold text-[#534D56] leading-tight">
+        {blog.title}
+      </h1>
+
+      <p className="mt-3 md:mt-4 text-sm text-[#656176]">
+        {blog.date} • {blog.author} • {blog.readTime} min read
+      </p>
+
+      <div className="mt-8 md:mt-12 space-y-5 md:space-y-6 text-sm md:text-base text-[#656176] leading-relaxed">
+        {blog.content}
+      </div>
+
+      <Link
+        to="/#blog"
+        className="inline-block mt-12 md:mt-16 text-sm font-medium text-[#1B998B]"
       >
-        <h2 className="text-3xl md:text-4xl font-extrabold text-[#534D56]">
-          Share Your Blog
-        </h2>
-
-        <p className="mt-4 text-[#656176] text-lg leading-relaxed">
-          Have a story, experience, or insight you’d like to share?  
-          Submit your blog and get featured on our website.
-        </p>
-
-        <div className="mt-10">
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSedZFX0hGgo-Ewgh5cCPFvCU_x4-tj_eOiT9JhGnY0x23cCCA/viewform?usp=dialog"
-            target="_blank"
-            rel="noreferrer"
-            className="
-              inline-flex items-center justify-center
-              px-10 py-4
-              rounded-full
-              bg-[#1B998B]
-              text-white
-              text-lg
-              font-medium
-              hover:bg-[#178f7f]
-              transition
-            "
-          >
-            Submit Your Blog →
-          </a>
-        </div>
-
-        <p className="mt-6 text-sm text-[#656176]">
-          All submissions are reviewed before publishing.
-        </p>
-      </motion.div>
-    </section>
+        ← Back to blogs
+      </Link>
+    </article>
   );
 }
