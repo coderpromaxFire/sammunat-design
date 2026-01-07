@@ -9,7 +9,6 @@ import {
   VscAccount,
   VscSettingsGear,
   VscBook,
-  VscSearch
 } from "react-icons/vsc";
 
 export default function Navbar({ showSearch = true }) {
@@ -17,7 +16,6 @@ export default function Navbar({ showSearch = true }) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   const [showDock, setShowDock] = useState(true);
-  const [query, setQuery] = useState("");
   const [openHiring, setOpenHiring] = useState(false);
 
   useEffect(() => {
@@ -27,19 +25,6 @@ export default function Navbar({ showSearch = true }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const q = query.toLowerCase().trim();
-    if (!q) return;
-
-    if (q.includes("service")) scrollTo("services");
-    else if (q.includes("about")) scrollTo("about");
-    else if (q.includes("contact")) scrollTo("contact");
-    else if (q.includes("blog")) scrollTo("blog");
-
-    setQuery("");
-  };
 
   const dockItems = [
     { icon: <VscHome size={20} />, label: "Home", onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
@@ -51,61 +36,54 @@ export default function Navbar({ showSearch = true }) {
 
   return (
     <>
+      {/* NAVBAR */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
 
+          {/* Logo */}
           <div
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="cursor-pointer text-2xl font-extrabold text-[#534D56]"
+            className="cursor-pointer text-xl md:text-2xl font-extrabold text-[#534D56]"
           >
             Sammu<span className="text-[#1B998B]">nat</span>
           </div>
 
-          {showSearch && (
-            <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md">
-              <div className="relative w-full">
-                <VscSearch
-                  size={18}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-[#656176]"
-                />
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search services, blogs..."
-                  className="w-full pl-10 pr-4 py-2 rounded-full border border-[#534D56]/20 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B998B]"
-                />
-              </div>
-            </form>
-          )}
-
+          {/* CTA */}
           <button
             onClick={() => setOpenHiring(true)}
-            className="px-6 py-2 rounded-full bg-[#1B998B] text-white font-semibold shadow-lg hover:scale-105 transition"
+            className="
+              px-4 py-2
+              md:px-6 md:py-2
+              rounded-full
+              bg-[#1B998B]
+              text-white
+              text-sm md:text-base
+              font-semibold
+            "
           >
-            We’re Hiring 🚀
+            We’re Hiring
           </button>
         </div>
       </header>
 
+      {/* DOCK → DESKTOP ONLY */}
       {showDock && (
-        <nav className="fixed bottom-6 left-0 right-0 z-40 flex justify-center">
+        <nav className="hidden md:flex fixed bottom-6 left-0 right-0 z-40 justify-center">
           <Dock
             items={dockItems}
-            panelHeight={70}
-            baseItemSize={52}
-            magnification={74}
-            distance={200}
+            panelHeight={68}
+            baseItemSize={48}
+            magnification={68}
+            distance={180}
           />
         </nav>
       )}
 
-      <HiringModal
-        open={openHiring}
-        onClose={() => setOpenHiring(false)}
-      />
+      <HiringModal open={openHiring} onClose={() => setOpenHiring(false)} />
     </>
   );
 }
+
 
 
 

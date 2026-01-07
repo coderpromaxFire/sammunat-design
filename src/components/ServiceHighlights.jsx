@@ -29,69 +29,43 @@ const services = [
 
 export default function ServiceHighlights() {
   return (
-    <section className="bg-[#F8F1FF] py-24 px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section className="bg-[#F8F1FF] py-16 px-4 md:py-24 md:px-6">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
         {services.map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.1 }}
             viewport={{ once: true }}
             className="
               relative
-              h-[420px] md:h-[460px]
+              h-[300px] md:h-[460px]
               rounded-3xl overflow-hidden
-              shadow-2xl
+              shadow-xl
             "
           >
-            {/* IMAGE */}
             <img
               src={item.image}
               alt={item.focus}
               className="absolute inset-0 w-full h-full object-cover"
             />
 
-            {/* GRADIENT OVERLAY */}
-            <div
-              className="
-                absolute inset-0
-                bg-gradient-to-r
-                from-black/70 via-black/40 to-transparent
-              "
-            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
 
-            {/* CONTENT */}
-            <div
-              className="
-                relative z-10
-                h-full
-                flex flex-col justify-center
-                px-8 md:px-16
-                max-w-3xl
-              "
-            >
-              <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+            <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 max-w-3xl">
+              <h2 className="text-2xl md:text-5xl font-extrabold text-white leading-tight">
                 {item.title}
                 <span className="block text-[#1B998B]">
                   {item.focus}
                 </span>
               </h2>
 
-              <p className="mt-6 text-white/90 text-lg leading-relaxed">
+              <p className="mt-4 md:mt-6 text-white/90 text-sm md:text-lg leading-relaxed">
                 {item.desc}
               </p>
 
-              <button
-                className="
-                  mt-8 w-fit
-                  px-8 py-3 rounded-lg
-                  bg-[#1B998B]
-                  text-white font-semibold
-                  hover:opacity-90
-                  transition
-                "
-              >
+              <button className="mt-6 md:mt-8 w-fit px-6 py-3 rounded-lg bg-[#1B998B] text-white font-semibold">
                 {item.cta}
               </button>
             </div>
@@ -101,4 +75,5 @@ export default function ServiceHighlights() {
     </section>
   );
 }
+
 
