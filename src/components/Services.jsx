@@ -1,6 +1,55 @@
 import { motion } from "framer-motion";
 
-const services = [/* SAME DATA AS BEFORE */];
+const services = [
+  {
+    title: "Web Development",
+    desc: "High-performance websites and web apps built with modern technologies.",
+    tags: ["React", "Next.js", "Tailwind", "Node.js"],
+    bg: "bg-[#DECDF5]",
+    text: "text-[#534D56]",
+    span: ""
+  },
+  {
+    title: "UI / UX Design",
+    desc: "Clean, user-focused interfaces that are intuitive and conversion-driven.",
+    tags: ["Figma", "Design Systems", "Prototyping"],
+    bg: "bg-[#E8DDF8]",
+    text: "text-[#534D56]",
+    span: ""
+  },
+  {
+    title: "CRM & ERP Systems",
+    desc: "Custom internal tools to manage operations, customers, and data.",
+    tags: ["Dashboards", "Automation", "Scalability"],
+    bg: "bg-[#F3E9FF]",
+    text: "text-[#534D56]",
+    span: ""
+  },
+  {
+    title: "Video Editing",
+    desc: "Professional video editing with cinematic storytelling and motion.",
+    tags: ["Reels", "YouTube", "Motion Graphics"],
+    bg: "bg-[#DECDF5]",
+    text: "text-[#534D56]",
+    span: ""
+  },
+  {
+    title: "Branding & Identity",
+    desc: "Brand systems that communicate trust, clarity, and credibility.",
+    tags: ["Logos", "Visual Identity", "Guidelines"],
+    bg: "bg-[#E8DDF8]",
+    text: "text-[#534D56]",
+    span: ""
+  },
+  {
+    title: "Consulting & Strategy",
+    desc: "Technical and product guidance to help you make the right decisions.",
+    tags: ["Roadmaps", "Audits", "Scaling"],
+    bg: "bg-[#F3E9FF]",
+    text: "text-[#534D56]",
+    span: ""
+  }
+];
 
 export default function Services() {
   const scrollToContact = () =>
@@ -28,7 +77,7 @@ export default function Services() {
             viewport={{ once: true }}
             whileHover={{ y: -6 }}
             className={`
-              ${s.bg} ${s.text} ${s.span}
+              ${s.bg} ${s.text}
               rounded-3xl p-6 md:p-10
               cursor-pointer relative overflow-hidden
             `}
