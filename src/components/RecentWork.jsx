@@ -68,19 +68,19 @@ const works = [
 
 export default function RecentWork() {
   return (
-    <section id="work" className="py-36 px-6 bg-[#F8F1FF]">
+    <section id="work" className="py-16 px-4 md:py-36 md:px-6 bg-[#F8F1FF]">
       {/* Header */}
-      <div className="max-w-5xl mx-auto text-center mb-28">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#534D56]">
+      <div className="max-w-5xl mx-auto text-center mb-12 md:mb-28">
+        <h2 className="text-2xl md:text-5xl font-extrabold text-[#534D56]">
           Recent <span className="text-[#1B998B]">Work</span>
         </h2>
-        <p className="mt-6 text-[#656176] text-lg">
+        <p className="mt-4 md:mt-6 text-[#656176] text-sm md:text-lg">
           Selected products crafted with clarity and care.
         </p>
       </div>
 
       {/* Grid */}
-      <div className="max-w-6xl mx-auto grid gap-20 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="max-w-6xl mx-auto grid gap-8 md:gap-20 sm:grid-cols-2 lg:grid-cols-3">
         {works.map((work, i) => (
           <motion.article
             key={i}
@@ -95,35 +95,34 @@ export default function RecentWork() {
               <img
                 src={work.image}
                 alt={work.title}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[200px] md:h-[300px] object-cover"
               />
             </div>
 
             {/* Floating caption */}
-            <div
-              className="
-                relative
-                -mt-14 mx-6
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-[0_20px_40px_rgba(83,77,86,0.15)]
-              "
-            >
+            <div className="
+              relative
+              -mt-10 md:-mt-14
+              mx-4 md:mx-6
+              bg-white
+              rounded-2xl
+              p-4 md:p-6
+              shadow-[0_20px_40px_rgba(83,77,86,0.15)]
+            ">
               <span className="text-xs uppercase tracking-widest text-[#1B998B]">
                 {work.category}
               </span>
 
-              <h3 className="mt-2 text-lg font-semibold text-[#534D56]">
+              <h3 className="mt-2 text-base md:text-lg font-semibold text-[#534D56]">
                 {work.title}
               </h3>
 
-              <p className="mt-3 text-sm text-[#656176]">
+              <p className="mt-2 md:mt-3 text-xs md:text-sm text-[#656176]">
                 {work.summary}
               </p>
 
               <span className="
-                inline-block mt-4
+                inline-block mt-3 md:mt-4
                 text-xs px-3 py-1 rounded-full
                 bg-[#1B998B]/10
                 text-[#1B998B]
@@ -137,5 +136,3 @@ export default function RecentWork() {
     </section>
   );
 }
-
-

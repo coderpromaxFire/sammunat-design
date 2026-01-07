@@ -64,17 +64,27 @@ export default function Hero() {
         {/* CTAs */}
         <div
           className="
-            mt-8
-            flex flex-col gap-4
+            mt-6
+            flex flex-col gap-3
             sm:flex-row
-            sm:gap-5
+            sm:gap-4
           "
         >
           <button
             onClick={() => scrollTo("contact")}
             className="
-              px-7 py-3
-              rounded-lg
+              w-full sm:w-auto
+
+              /* MOBILE (SMALL) */
+              px-4 py-2
+              text-sm
+              rounded-md
+
+              /* DESKTOP (UNCHANGED) */
+              md:px-8 md:py-4
+              md:text-base
+              md:rounded-lg
+
               bg-[#1B998B]
               text-white
               font-semibold
@@ -86,8 +96,18 @@ export default function Hero() {
           <button
             onClick={() => scrollTo("services")}
             className="
-              px-7 py-3
-              rounded-lg
+              w-full sm:w-auto
+
+              /* MOBILE (SMALL) */
+              px-4 py-2
+              text-sm
+              rounded-md
+
+              /* DESKTOP (UNCHANGED) */
+              md:px-8 md:py-4
+              md:text-base
+              md:rounded-lg
+
               border border-[#1B998B]
               text-[#1B998B]
               font-semibold
