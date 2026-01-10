@@ -37,7 +37,7 @@ export default function CTA() {
 
   return (
     <section
-      id="contact"
+      id="cta"
       className="
         relative
         py-16 px-4
@@ -46,7 +46,7 @@ export default function CTA() {
         overflow-hidden
       "
     >
-      {/* 🔹 DOT WALLPAPER */}
+      {/* Dot background */}
       <div
         className="
           absolute inset-0
@@ -56,53 +56,39 @@ export default function CTA() {
         "
       />
 
-      {/* 🔹 FLOATING CHAT ICONS */}
+      {/* Floating chat icons */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 14 }).map((_, i) => {
-          const float = 14 + Math.random() * 12;
-          const duration = 12 + Math.random() * 6;
-          const size = 14 + Math.random() * 10;
-
-          return (
-            <motion.span
-              key={i}
-              initial={{ y: 0 }}
-              animate={{ y: [-float, float, -float] }}
-              transition={{
-                duration,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute text-[#1B998B]/30 select-none"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                fontSize: `${size}px`
-              }}
-            >
-              💬
-            </motion.span>
-          );
-        })}
+        {Array.from({ length: 12 }).map((_, i) => (
+          <motion.span
+            key={i}
+            initial={{ y: 0 }}
+            animate={{ y: [-20, 20, -20] }}
+            transition={{
+              duration: 10 + i,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute text-[#1B998B]/30 select-none"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              fontSize: `${14 + Math.random() * 10}px`
+            }}
+          >
+            💬
+          </motion.span>
+        ))}
       </div>
 
-      {/* 🔹 BLOBS */}
+      {/* Blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-60 h-60 bg-[#1B998B]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#DECDF5] rounded-full blur-3xl" />
       </div>
 
-      {/* CONTENT */}
-      <div
-        className="
-          relative z-10
-          max-w-6xl mx-auto
-          grid gap-10
-          md:grid-cols-2 md:gap-16
-          items-center
-        "
-      >
-        {/* LEFT CONTENT */}
+      {/* Content */}
+      <div className="relative z-10 max-w-6xl mx-auto grid gap-12 md:grid-cols-2 items-center">
+        {/* Left */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -126,32 +112,27 @@ export default function CTA() {
           </ul>
         </motion.div>
 
-        {/* RIGHT FORM */}
+        {/* Right */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="
-            bg-[#DECDF5]
-            rounded-2xl
-            p-5 md:p-8
-            shadow-xl
-          "
+          className="bg-[#DECDF5] rounded-2xl p-5 md:p-8 shadow-xl"
         >
           {status === "success" ? (
             <p className="text-green-600 font-medium text-center">
               ✅ Message sent successfully!
             </p>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 name="name"
                 value={form.name}
                 onChange={handleChange}
                 required
                 placeholder="Your Name"
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-lg text-sm md:text-base"
+                className="w-full px-4 py-3 rounded-lg text-sm"
               />
 
               <input
@@ -161,7 +142,7 @@ export default function CTA() {
                 onChange={handleChange}
                 required
                 placeholder="Email Address"
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-lg text-sm md:text-base"
+                className="w-full px-4 py-3 rounded-lg text-sm"
               />
 
               <input
@@ -171,7 +152,7 @@ export default function CTA() {
                 onChange={handleChange}
                 required
                 placeholder="Phone Number"
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-lg text-sm md:text-base"
+                className="w-full px-4 py-3 rounded-lg text-sm"
               />
 
               <textarea
@@ -181,21 +162,13 @@ export default function CTA() {
                 onChange={handleChange}
                 required
                 placeholder="Message"
-                className="w-full px-3 py-2.5 md:px-4 md:py-3 rounded-lg resize-none text-sm md:text-base"
+                className="w-full px-4 py-3 rounded-lg resize-none text-sm"
               />
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
-                className="
-                  w-full
-                  py-3 md:py-4
-                  text-sm md:text-base
-                  bg-[#1B998B]
-                  text-white
-                  rounded-lg
-                  font-semibold
-                "
+                className="w-full py-3 bg-[#1B998B] text-white rounded-lg font-semibold"
               >
                 {status === "loading" ? "Sending..." : "Send Message"}
               </motion.button>
@@ -212,4 +185,5 @@ export default function CTA() {
     </section>
   );
 }
+
 
