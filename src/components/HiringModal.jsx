@@ -87,18 +87,68 @@ export default function HiringModal({ open, onClose }) {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
 
-            {/* Text Inputs */}
-            {["name", "email", "college", "branch", "domain"].map((field) => (
-              <input
-                key={field}
-                name={field}
-                value={form[field]}
-                onChange={handleChange}
-                required
-                placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                className="w-full px-4 py-2 border rounded-lg"
-              />
-            ))}
+            {/* Name */}
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              placeholder="Full Name"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+
+            {/* Email */}
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder="Email Address"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+
+            {/* College */}
+            <input
+              name="college"
+              value={form.college}
+              onChange={handleChange}
+              required
+              placeholder="College / University"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+
+            {/* Branch */}
+            <input
+              name="branch"
+              value={form.branch}
+              onChange={handleChange}
+              required
+              placeholder="Branch / Department"
+              className="w-full px-4 py-2 border rounded-lg"
+            />
+
+            {/* DOMAIN / POSITION SELECT */}
+            <select
+              name="domain"
+              value={form.domain}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg bg-white"
+            >
+              <option value="" disabled>
+                Select Position
+              </option>
+
+              {/* === Positions (edit anytime) === */}
+              <option value="Frontend Developer">Frontend Developer</option>
+              <option value="Backend Developer">Backend Developer</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
+              <option value="UI/UX Designer">UI / UX Designer</option>
+              <option value="Mobile App Developer">Mobile App Developer</option>
+              <option value="Software Intern">Software Intern</option>
+              <option value="Marketing Intern">Marketing Intern</option>
+            </select>
 
             {/* Resume Upload */}
             <div>

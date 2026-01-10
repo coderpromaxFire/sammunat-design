@@ -32,19 +32,22 @@ function DockItem({
   const ref = useRef(null);
   const isHovered = useMotionValue(0);
 
-  const mouseDistance = useTransform(mouseX, val => {
+  const distanceFromMouse = useTransform(mouseX, (x) => {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return distance;
-    return val - (rect.left + rect.width / 2);
+
+    const center = rect.left + rect.width / 2;
+    return x - center;
   });
 
-  const targetSize = useTransform(
-    mouseDistance,
+  const clampedSize = useTransform(
+    distanceFromMouse,
     [-distance, 0, distance],
-    [baseItemSize, magnification, baseItemSize]
+    [baseItemSize, magnification, baseItemSize],
+    { clamp: true }
   );
 
-  const size = useSpring(targetSize, spring);
+  const size = useSpring(clampedSize, spring);
 
   return (
     <motion.div
@@ -52,14 +55,10 @@ function DockItem({
       style={{ width: size, height: size }}
       onHoverStart={() => isHovered.set(1)}
       onHoverEnd={() => isHovered.set(0)}
-      onFocus={() => isHovered.set(1)}
-      onBlur={() => isHovered.set(0)}
       onClick={onClick}
       className={`dock-item ${className}`}
-      tabIndex={0}
       role="button"
-      aria-label={label}
-      onKeyDown={(e) => e.key === 'Enter' && onClick?.()}
+      tabIndex={0}
     >
       {Children.map(children, child =>
         cloneElement(child, { isHovered })
@@ -83,12 +82,11 @@ function DockLabel({ children, isHovered }) {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: 0 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: -10 }}
-          exit={{ opacity: 0, y: 0 }}
-          transition={{ duration: 0.2 }}
+          exit={{ opacity: 0, y: 6 }}
+          transition={{ duration: 0.18 }}
           className="dock-label"
-          role="tooltip"
         >
           {children}
         </motion.div>
@@ -106,22 +104,22 @@ function DockIcon({ children }) {
 export default function Dock({
   items,
   className = '',
-  spring = { mass: 0.1, stiffness: 180, damping: 15 },
-  magnification = 70,
-  distance = 200,
-  panelHeight = 68,
-  baseItemSize = 50
+  spring = { mass: 0.35, stiffness: 260, damping: 22 },
+  magnification = 64,
+  distance = 140,
+  panelHeight = 64,
+  baseItemSize = 44
 }) {
   const mouseX = useMotionValue(Infinity);
+  const panelRef = useRef(null);
 
   return (
     <motion.div className="dock-outer">
       <motion.div
+        ref={panelRef}
         className={`dock-panel ${className}`}
         style={{ height: panelHeight }}
-        role="toolbar"
-        aria-label="Application dock"
-        onMouseMove={({ clientX }) => mouseX.set(clientX)}
+        onMouseMove={(e) => mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
       >
         {items.map((item, index) => (
@@ -143,3 +141,4 @@ export default function Dock({
     </motion.div>
   );
 }
+

@@ -19,32 +19,73 @@ export default function Navbar({ showSearch = true }) {
   const [showDock, setShowDock] = useState(true);
   const [openHiring, setOpenHiring] = useState(false);
 
+  /* ---------------- SHOW DOCK ONLY ON HERO ---------------- */
   useEffect(() => {
     const handleScroll = () => {
       setShowDock(window.scrollY < window.innerHeight * 0.85);
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* ---------------- DOCK ITEMS ---------------- */
   const dockItems = [
-    { icon: <VscHome />, label: "Home", onClick: () => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" }) },
-    { icon: <VscArchive />, label: "Services", onClick: () => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" }) },
-    { icon: <VscBook />, label: "Blog", onClick: () => document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" }) },
-    { icon: <VscAccount />, label: "About", onClick: () => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }) },
-    { icon: <VscSettingsGear />, label: "Contact", onClick: () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }) }
+    {
+      icon: <VscHome />,
+      label: "Home",
+      onClick: () =>
+        document
+          .getElementById("home")
+          ?.scrollIntoView({ behavior: "smooth" })
+    },
+    {
+      icon: <VscArchive />,
+      label: "Services",
+      onClick: () =>
+        document
+          .getElementById("services")
+          ?.scrollIntoView({ behavior: "smooth" })
+    },
+    {
+      icon: <VscBook />,
+      label: "Blog",
+      onClick: () =>
+        document
+          .getElementById("blog")
+          ?.scrollIntoView({ behavior: "smooth" })
+    },
+    {
+      icon: <VscAccount />,
+      label: "About",
+      onClick: () =>
+        document
+          .getElementById("about")
+          ?.scrollIntoView({ behavior: "smooth" })
+    },
+    {
+      icon: <VscSettingsGear />,
+      label: "Contact",
+      onClick: () =>
+        document
+          .getElementById("contact")
+          ?.scrollIntoView({ behavior: "smooth" })
+    }
   ];
 
   return (
     <>
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
         <div className="max-w-7xl mx-auto px-4 h-12 md:h-16 flex items-center justify-between gap-3">
 
           {/* LOGO */}
           <div
             onClick={() =>
-              document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })
+              document
+                .getElementById("home")
+                ?.scrollIntoView({ behavior: "smooth" })
             }
             className="cursor-pointer font-extrabold text-[#534D56] text-base md:text-2xl whitespace-nowrap"
           >
@@ -62,11 +103,11 @@ export default function Navbar({ showSearch = true }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Enter" && query.trim()) {
                     setShowOverlay(true);
                   }
                 }}
-                placeholder="Search......"
+                placeholder="Search..."
                 className="bg-transparent outline-none w-full"
               />
             </div>
@@ -75,14 +116,14 @@ export default function Navbar({ showSearch = true }) {
           {/* HIRING BUTTON */}
           <button
             onClick={() => setOpenHiring(true)}
-            className="px-3 py-1.5 md:px-6 md:py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold"
+            className="px-3 py-1.5 md:px-6 md:py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold hover:scale-105 transition-transform"
           >
-            We'r Hiring
+            We’re Hiring
           </button>
         </div>
       </header>
 
-      {/* SEARCH OVERLAY */}
+      {/* ================= SEARCH OVERLAY ================= */}
       {showOverlay && (
         <SearchOverlay
           query={query}
@@ -93,9 +134,9 @@ export default function Navbar({ showSearch = true }) {
         />
       )}
 
-      {/* DOCK (DESKTOP ONLY) */}
+      {/* ================= DESKTOP DOCK ================= */}
       {showDock && (
-        <nav className="hidden md:flex fixed bottom-6 left-0 right-0 z-40 justify-center">
+        <div className="hidden md:flex fixed bottom-6 left-0 right-0 z-40 justify-center pointer-events-auto">
           <Dock
             items={dockItems}
             panelHeight={64}
@@ -103,11 +144,14 @@ export default function Navbar({ showSearch = true }) {
             magnification={64}
             distance={180}
           />
-        </nav>
+        </div>
       )}
 
-      {/* HIRING MODAL */}
-      <HiringModal open={openHiring} onClose={() => setOpenHiring(false)} />
+      {/* ================= HIRING MODAL ================= */}
+      <HiringModal
+        open={openHiring}
+        onClose={() => setOpenHiring(false)}
+      />
     </>
   );
 }

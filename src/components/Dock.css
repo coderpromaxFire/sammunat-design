@@ -1,51 +1,105 @@
-/* Outer wrapper */
+/* ================= ROOT ================= */
+
 .dock-outer {
-  position: fixed;
-  bottom: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  pointer-events: auto;
 }
 
-/* Dock panel */
+/* ================= PANEL ================= */
+
 .dock-panel {
+  position: relative;
+
   display: flex;
   align-items: flex-end;
   gap: 0.75rem;
 
   padding: 0.6rem 0.8rem;
+  height: 64px;
+
   border-radius: 1.25rem;
 
-  background: #DECDF5;
+  background: rgba(222, 205, 245, 0.95);
   border: 1px solid rgba(83, 77, 86, 0.15);
 
-  box-shadow: 0 16px 36px rgba(83, 77, 86, 0.16);
+  box-shadow:
+    0 16px 36px rgba(83, 77, 86, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Dock item */
+/* ================= ITEM ================= */
+
 .dock-item {
-  display: inline-flex;
+  position: relative;
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
   background: #F8F1FF;
-  border: 1px solid rgba(83, 77, 86, 0.2);
   border-radius: 12px;
 
-  color: #534D56;
   cursor: pointer;
+  user-select: none;
 
-  box-shadow: 0 6px 14px rgba(83, 77, 86, 0.12);
+  box-shadow:
+    0 6px 14px rgba(83, 77, 86, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  will-change: width, height;
+  transition: background 0.2s ease;
 }
 
-/* Hover */
 .dock-item:hover {
   background: #1B998B;
-  border-color: #1B998B;
   color: #ffffff;
 }
 
-/* Tooltip label */
+/* ================= ICON ================= */
+
+.dock-icon {
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= LABEL ================= */
+
 .dock-label {
+  position: absolute;
   top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.4rem;
+
+  background: #534D56;
+  color: #ffffff;
+
   font-size: 0.7rem;
+  white-space: nowrap;
+
+  pointer-events: none;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* ================= ACCESSIBILITY ================= */
+
+.dock-item:focus-visible {
+  outline: 2px solid #1B998B;
+  outline-offset: 2px;
+}
+
+/* ================= MOBILE SAFETY ================= */
+
+@media (max-width: 767px) {
+  .dock-outer {
+    display: none;
+  }
 }
