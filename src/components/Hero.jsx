@@ -48,7 +48,8 @@ export default function Hero() {
             and scale thoughtful digital experiences.
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          {/* ✅ BUTTON GRID FIX */}
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4">
             <button
               onClick={() => setOpenChat(true)}
               className="px-4 py-2 md:px-8 md:py-4 bg-[#1B998B] text-white font-semibold rounded-md md:rounded-lg"
