@@ -1,12 +1,30 @@
 import { motion } from "framer-motion";
 
 const features = [
-  { title: "Scalable Architecture", desc: "Systems designed to grow with your product without painful rewrites." },
-  { title: "Clean UI / UX", desc: "Interfaces that feel intuitive, simple, and conversion-focused." },
-  { title: "Secure by Default", desc: "Security best practices built in from the very first line of code." },
-  { title: "Performance First", desc: "Fast load times and smooth experiences across all devices." },
-  { title: "Modern Tech Stack", desc: "Built using reliable, future-ready tools and frameworks." },
-  { title: "Fast & Reliable Delivery", desc: "Lean process that ships real value without unnecessary delays." }
+  {
+    title: "Scalable Architecture",
+    desc: "Systems designed to grow with your product without painful rewrites."
+  },
+  {
+    title: "Clean UI / UX",
+    desc: "Interfaces that feel intuitive, simple, and conversion-focused."
+  },
+  {
+    title: "Secure by Default",
+    desc: "Security best practices built in from the very first line of code."
+  },
+  {
+    title: "Performance First",
+    desc: "Fast load times and smooth experiences across all devices."
+  },
+  {
+    title: "Modern Tech Stack",
+    desc: "Built using reliable, future-ready tools and frameworks."
+  },
+  {
+    title: "Fast & Reliable Delivery",
+    desc: "Lean process that ships real value without unnecessary delays."
+  }
 ];
 
 export default function Features() {
@@ -36,7 +54,7 @@ export default function Features() {
         </div>
 
         {/* CARDS */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-14">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-14">
           {features.map((f, i) => (
             <motion.div
               key={i}
@@ -45,7 +63,7 @@ export default function Features() {
               transition={{ duration: 0.5, delay: i * 0.06 }}
               viewport={{ once: true }}
               className="
-                p-6 md:p-10
+                p-5 md:p-10
                 rounded-2xl md:rounded-3xl
                 bg-[#DECDF5]/55
                 backdrop-blur-md
@@ -53,10 +71,10 @@ export default function Features() {
                 shadow-xl
               "
             >
-              <h3 className="text-xl md:text-2xl font-semibold text-[#1B998B] mb-3">
+              <h3 className="text-lg md:text-2xl font-semibold text-[#1B998B] mb-2 md:mb-3">
                 {f.title}
               </h3>
-              <p className="text-sm md:text-base text-[#656176]">
+              <p className="text-xs md:text-base text-[#656176]">
                 {f.desc}
               </p>
             </motion.div>
