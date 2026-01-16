@@ -68,7 +68,7 @@ export default function Navbar({ showSearch = true }) {
     <>
       {/* ================= HEADER ================= */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
-        <div className="max-w-7xl mx-auto px-4 py-2 md:py-0 min-h-[56px] md:h-16 flex flex-wrap md:flex-nowrap items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 py-2 md:py-0 min-h-[56px] md:h-16 flex flex-nowrap items-center justify-between gap-3">
 
           {/* LOGO */}
           <div
@@ -83,9 +83,9 @@ export default function Navbar({ showSearch = true }) {
             </span>
           </div>
 
-          {/* SEARCH */}
+          {/* SEARCH — DESKTOP ONLY */}
           {showSearch && (
-            <div className="flex items-center gap-2 bg-white rounded-full px-3 py-1 text-sm text-[#656176] border border-[#534D56]/10 w-full sm:w-auto sm:max-w-[260px]">
+            <div className="hidden md:flex items-center gap-2 bg-white rounded-full px-3 py-1 text-sm text-[#656176] border border-[#534D56]/10 w-full max-w-[260px]">
               <VscSearch />
               <input
                 value={query}
@@ -102,7 +102,7 @@ export default function Navbar({ showSearch = true }) {
           )}
 
           {/* ACTION BUTTONS */}
-          <div className="flex flex-col sm:flex-row items-center gap-2 md:gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2 md:gap-3">
 
             {/* GET SERVICES */}
             <button
@@ -112,7 +112,7 @@ export default function Navbar({ showSearch = true }) {
                   "_blank"
                 )
               }
-              className="w-full sm:w-auto px-4 py-2 rounded-full border border-[#1B998B] text-[#1B998B] text-sm md:text-base font-semibold hover:bg-[#1B998B] hover:text-white transition"
+              className="px-3 md:px-4 py-2 rounded-full border border-[#1B998B] text-[#1B998B] text-xs md:text-base font-semibold hover:bg-[#1B998B] hover:text-white transition whitespace-nowrap"
             >
               Get Services
             </button>
@@ -120,7 +120,7 @@ export default function Navbar({ showSearch = true }) {
             {/* WE'RE HIRING */}
             <button
               onClick={() => setOpenHiring(true)}
-              className="w-full sm:w-auto px-4 py-2 rounded-full bg-[#1B998B] text-white text-sm md:text-base font-semibold hover:scale-105 transition-transform"
+              className="px-3 md:px-4 py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold hover:scale-105 transition-transform whitespace-nowrap"
             >
               We’re Hiring
             </button>
@@ -157,7 +157,6 @@ export default function Navbar({ showSearch = true }) {
     </>
   );
 }
-
 
 
 
