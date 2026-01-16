@@ -60,7 +60,7 @@ export default function Services() {
         </p>
       </div>
 
-      {/* ✅ GRID FIX IS HERE */}
+      {/* GRID */}
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
         {services.map((s, i) => (
           <motion.div
@@ -73,24 +73,36 @@ export default function Services() {
             whileHover={{ y: -6 }}
             className={`
               ${s.bg} ${s.text}
-              rounded-3xl p-5 md:p-10
-              cursor-pointer relative overflow-hidden
+              rounded-3xl
+              p-4 md:p-10
+              cursor-pointer
+              overflow-hidden
+
+              /* ✅ SQUARE ON MOBILE */
+              aspect-square md:aspect-auto
+
+              /* layout */
+              flex flex-col justify-between
             `}
           >
-            <div className="relative z-10">
-              <h3 className="text-lg md:text-2xl font-bold mb-2 md:mb-3">
+            {/* Top content */}
+            <div>
+              <h3 className="text-base md:text-2xl font-bold mb-1 md:mb-3">
                 {s.title}
               </h3>
-              <p className="opacity-80 text-xs md:text-base">
+
+              {/* Clamp text on mobile */}
+              <p className="opacity-80 text-xs md:text-base line-clamp-3 md:line-clamp-none">
                 {s.desc}
               </p>
             </div>
 
-            <div className="relative z-10 mt-4 md:mt-6 flex flex-wrap gap-2">
+            {/* Tags */}
+            <div className="mt-3 md:mt-6 flex flex-wrap gap-1.5 md:gap-2">
               {s.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="px-3 py-1 text-xs md:text-sm rounded-full border border-current/30"
+                  className="px-2.5 py-1 text-[10px] md:text-sm rounded-full border border-current/30"
                 >
                   {tag}
                 </span>
@@ -102,3 +114,4 @@ export default function Services() {
     </section>
   );
 }
+
