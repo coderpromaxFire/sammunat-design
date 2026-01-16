@@ -22,8 +22,23 @@ export default function Hero() {
 
   return (
     <>
-      <section className="relative bg-[#F8F1FF] overflow-hidden">
-        {/* Background */}
+      {/* ================= HERO ================= */}
+      <section
+        id="home"
+        className="
+          relative
+          bg-[#F8F1FF]
+          overflow-hidden
+
+          /* ✅ MOBILE FIX */
+          min-h-[calc(100svh-56px)]
+          flex items-center
+
+          /* desktop unchanged */
+          md:min-h-screen
+        "
+      >
+        {/* Background Threads */}
         <div className="absolute inset-0 z-0 opacity-40 sm:opacity-30">
           <Threads
             color={[27 / 255, 153 / 255, 139 / 220]}
@@ -34,7 +49,27 @@ export default function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24 md:min-h-screen md:px-6">
+        <div
+          className="
+            relative z-10
+            w-full
+            flex flex-col
+            items-center
+            text-center
+            px-4
+
+            /* ✅ MOBILE SPACING */
+            pt-[72px]
+            pb-12
+
+            /* desktop spacing */
+            md:pt-0
+            md:pb-0
+            md:min-h-screen
+            md:justify-center
+            md:px-6
+          "
+        >
           <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold flex flex-wrap justify-center gap-2 text-[#534D56]">
             Build
             <RotatingText
@@ -48,7 +83,7 @@ export default function Hero() {
             and scale thoughtful digital experiences.
           </p>
 
-          {/* ✅ BUTTON GRID FIX */}
+          {/* Buttons */}
           <div className="mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-row sm:gap-4">
             <button
               onClick={() => setOpenChat(true)}
@@ -70,6 +105,7 @@ export default function Hero() {
       {/* Chatbot */}
       <Chatbot open={openChat} onClose={() => setOpenChat(false)} />
 
+      {/* Floating chat button */}
       {!openChat && (
         <div className="fixed right-4 bottom-[88px] sm:bottom-6 z-[150] flex items-center gap-3">
           <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-white text-sm text-[#534D56] shadow-md">
@@ -87,7 +123,6 @@ export default function Hero() {
     </>
   );
 }
-
 
 
 
