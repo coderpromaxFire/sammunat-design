@@ -28,7 +28,7 @@ export default function Chatbot({ open, onClose }) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await fetch("http://localhost:3001/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg.content })
@@ -54,38 +54,23 @@ export default function Chatbot({ open, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-end sm:items-end sm:justify-end">
-      {/* Overlay (mobile only) */}
+    <div className="fixed inset-0 z-[200] flex items-end sm:justify-end">
+      {/* Overlay (mobile) */}
       <div
         onClick={onClose}
         className="absolute inset-0 bg-black/30 sm:hidden"
       />
 
-      {/* Chat container */}
-      <div
-        className="
-          relative
-          w-full sm:w-[380px]
-          h-[65vh] sm:h-[520px]
-          bg-white
-          rounded-t-3xl sm:rounded-2xl
-          shadow-2xl
-          flex flex-col
-          overflow-hidden
-        "
-      >
+      {/* Chat box */}
+      <div className="relative w-full sm:w-[380px] h-[65vh] sm:h-[520px] bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+
         {/* Header */}
         <div className="bg-[#1B998B] text-white px-4 py-3 flex justify-between items-center">
           <div>
             <p className="font-semibold">Sammunat Assistant</p>
             <span className="text-xs opacity-80">Online • 24/7</span>
           </div>
-          <button
-            onClick={onClose}
-            className="text-2xl leading-none hover:opacity-70"
-          >
-            ×
-          </button>
+          <button onClick={onClose} className="text-2xl">×</button>
         </div>
 
         {/* Messages */}
@@ -132,6 +117,8 @@ export default function Chatbot({ open, onClose }) {
     </div>
   );
 }
+
+
 
 
 

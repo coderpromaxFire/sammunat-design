@@ -1,97 +1,42 @@
 import express from "express";
-import OpenAI from "openai";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const app = express();
 
-/**
- * Allow frontend (Vite) to talk to backend
- */
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["POST"],
-    allowedHeaders: ["Content-Type"]
-  })
-);
-
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
-/**
- * OpenAI client
- */
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+app.post("/chat", (req, res) => {
+  const msg = req.body.message?.toLowerCase() || "";
 
-/**
- * System prompt (Sammunat knowledge)
- */
-const SYSTEM_PROMPT = `
-You are Sammunat LLC’s official AI assistant.
+  let reply = "Hi 👋 I’m Sammunat’s assistant. How can I help you today?";
 
-About Sammunat LLC:
-Sammunat LLC is a digital solutions company that helps startups and businesses
-design, develop, and scale modern digital products.
-
-Services:
-- Web and application development
-- SaaS platforms
-- CRM & ERP systems
-- UI/UX design
-- Automation and custom software
-
-Guidelines:
-- Be friendly, professional, and customer-first
-- Clearly explain Sammunat’s services
-- Do NOT invent pricing or timelines
-- If asked about pricing or timelines, suggest contacting the team
-- If unsure, politely say you will connect the user with the team
-- Keep responses concise and helpful
-`;
-
-/**
- * Chat endpoint
- */
-app.post("/chat", async (req, res) => {
-  try {
-    const { message } = req.body;
-
-    if (!message) {
-      return res.json({
-        reply: "Please tell me how I can help you 😊"
-      });
-    }
-
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: message }
-      ]
-    });
-
-    const reply =
-      completion?.choices?.[0]?.message?.content ||
-      "I’m here to help! Could you please rephrase your question?";
-
-    res.json({ reply });
-  } catch (error) {
-    console.error("❌ OpenAI error:", error.message);
-    res.status(500).json({
-      reply:
-        "⚠️ I’m having trouble responding right now. Please try again later."
-    });
+  if (msg.includes("service")) {
+    reply =
+      "We offer Web Development, CRM & ERP solutions, UI/UX design, SaaS platforms, and automation services.";
+  } else if (msg.includes("web")) {
+    reply =
+      "Our Web Development services include websites, web apps, dashboards, and scalable platforms.";
+  } else if (msg.includes("crm") || msg.includes("erp")) {
+    reply =
+      "We build custom CRM & ERP systems to help businesses manage operations efficiently.";
+  } else if (msg.includes("ui") || msg.includes("ux") || msg.includes("design")) {
+    reply =
+      "Our UI/UX team designs modern, user-friendly interfaces focused on great user experience.";
+  } else if (msg.includes("price") || msg.includes("cost")) {
+    reply =
+      "Pricing depends on project scope. Please fill out our service form and our team will contact you.";
+  } else if (msg.includes("contact")) {
+    reply =
+      "You can contact us through the form on our website. Our team responds quickly.";
+  } else if (msg.includes("hello") || msg.includes("hi")) {
+    reply = "Hello 😊 How can I help you today?";
   }
+
+  res.json({ reply });
 });
 
-/**
- * Start server
- */
 app.listen(3001, () => {
-  console.log("✅ Backend running on http://localhost:3001");
+  console.log("✅ Free chatbot backend running on http://localhost:3001");
+  
 });

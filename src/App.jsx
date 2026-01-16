@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 /* Layout */
 import Navbar from "./components/Navbar";
@@ -24,10 +24,25 @@ import BlogPost from "./blog/BlogPost";
 import ShareBlogSection from "./blog/ShareBlogSection";
 
 export default function App() {
+  const location = useLocation();
+
+  // hide navbar & dock on blog post page
+  const isBlogPostPage = location.pathname.startsWith("/blog/");
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56]">
+    <div
+      className="
+        min-h-screen
+        overflow-x-hidden
+        bg-[#F8F1FF]
+        text-[#534D56]
+
+        /* ✅ IMPORTANT FIX */
+        pb-14 md:pb-0
+      "
+    >
       {/* Navbar */}
-      <Navbar />
+      {!isBlogPostPage && <Navbar />}
 
       <Routes>
         <Route
@@ -54,13 +69,12 @@ export default function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
 
-      {/* Mobile Bottom Navigation */}
-      <MobileDock />
+      {/* Mobile Bottom Dock */}
+      {!isBlogPostPage && <MobileDock />}
 
       {/* Footer */}
       <Footer />
     </div>
   );
 }
-
 
