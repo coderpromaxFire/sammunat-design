@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chatbot from "./Chatbot";
 import Threads from "./Threads";
 import RotatingText from "./RotatingText";
 
 export default function Hero() {
   const [openChat, setOpenChat] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({
@@ -16,12 +24,12 @@ export default function Hero() {
     <>
       <section className="relative bg-[#F8F1FF] overflow-hidden">
         {/* Background */}
-        <div className="absolute inset-0 z-0 opacity-30">
+        <div className="absolute inset-0 z-0 opacity-40 sm:opacity-30">
           <Threads
             color={[27 / 255, 153 / 255, 139 / 220]}
-            amplitude={0.5}
-            distance={0}
-            enableMouseInteraction
+            amplitude={isMobile ? 0.9 : 0.5}
+            distance={isMobile ? 0.12 : 0}
+            enableMouseInteraction={!isMobile}
           />
         </div>
 
@@ -78,6 +86,7 @@ export default function Hero() {
     </>
   );
 }
+
 
 
 
