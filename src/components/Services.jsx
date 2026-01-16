@@ -6,48 +6,42 @@ const services = [
     desc: "High-performance websites and web apps built with modern technologies.",
     tags: ["React", "Next.js", "Tailwind", "Node.js"],
     bg: "bg-[#DECDF5]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   },
   {
     title: "UI / UX Design",
     desc: "Clean, user-focused interfaces that are intuitive and conversion-driven.",
     tags: ["Figma", "Design Systems", "Prototyping"],
     bg: "bg-[#E8DDF8]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   },
   {
     title: "CRM & ERP Systems",
     desc: "Custom internal tools to manage operations, customers, and data.",
     tags: ["Dashboards", "Automation", "Scalability"],
     bg: "bg-[#F3E9FF]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   },
   {
     title: "Video Editing",
     desc: "Professional video editing with cinematic storytelling and motion.",
     tags: ["Reels", "YouTube", "Motion Graphics"],
     bg: "bg-[#DECDF5]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   },
   {
     title: "Branding & Identity",
     desc: "Brand systems that communicate trust, clarity, and credibility.",
     tags: ["Logos", "Visual Identity", "Guidelines"],
     bg: "bg-[#E8DDF8]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   },
   {
     title: "Consulting & Strategy",
     desc: "Technical and product guidance to help you make the right decisions.",
     tags: ["Roadmaps", "Audits", "Scaling"],
     bg: "bg-[#F3E9FF]",
-    text: "text-[#534D56]",
-    span: ""
+    text: "text-[#534D56]"
   }
 ];
 
@@ -66,7 +60,8 @@ export default function Services() {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {/* ✅ GRID FIX IS HERE */}
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
         {services.map((s, i) => (
           <motion.div
             key={i}
@@ -78,20 +73,20 @@ export default function Services() {
             whileHover={{ y: -6 }}
             className={`
               ${s.bg} ${s.text}
-              rounded-3xl p-6 md:p-10
+              rounded-3xl p-5 md:p-10
               cursor-pointer relative overflow-hidden
             `}
           >
             <div className="relative z-10">
-              <h3 className="text-xl md:text-2xl font-bold mb-3">
+              <h3 className="text-lg md:text-2xl font-bold mb-2 md:mb-3">
                 {s.title}
               </h3>
-              <p className="opacity-80 text-sm md:text-base">
+              <p className="opacity-80 text-xs md:text-base">
                 {s.desc}
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 flex flex-wrap gap-2">
+            <div className="relative z-10 mt-4 md:mt-6 flex flex-wrap gap-2">
               {s.tags.map((tag, idx) => (
                 <span
                   key={idx}

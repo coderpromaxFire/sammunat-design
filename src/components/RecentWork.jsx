@@ -79,8 +79,8 @@ export default function RecentWork() {
         </p>
       </div>
 
-      {/* Grid */}
-      <div className="max-w-6xl mx-auto grid gap-8 md:gap-20 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ✅ GRID FIX IS HERE */}
+      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-20">
         {works.map((work, i) => (
           <motion.article
             key={i}
@@ -100,15 +100,17 @@ export default function RecentWork() {
             </div>
 
             {/* Floating caption */}
-            <div className="
-              relative
-              -mt-10 md:-mt-14
-              mx-4 md:mx-6
-              bg-white
-              rounded-2xl
-              p-4 md:p-6
-              shadow-[0_20px_40px_rgba(83,77,86,0.15)]
-            ">
+            <div
+              className="
+                relative
+                -mt-10 md:-mt-14
+                mx-4 md:mx-6
+                bg-white
+                rounded-2xl
+                p-4 md:p-6
+                shadow-[0_20px_40px_rgba(83,77,86,0.15)]
+              "
+            >
               <span className="text-xs uppercase tracking-widest text-[#1B998B]">
                 {work.category}
               </span>
@@ -121,12 +123,14 @@ export default function RecentWork() {
                 {work.summary}
               </p>
 
-              <span className="
-                inline-block mt-3 md:mt-4
-                text-xs px-3 py-1 rounded-full
-                bg-[#1B998B]/10
-                text-[#1B998B]
-              ">
+              <span
+                className="
+                  inline-block mt-3 md:mt-4
+                  text-xs px-3 py-1 rounded-full
+                  bg-[#1B998B]/10
+                  text-[#1B998B]
+                "
+              >
                 {work.status}
               </span>
             </div>
