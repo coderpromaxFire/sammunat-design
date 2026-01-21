@@ -31,6 +31,7 @@ export default function ProjectEstimator() {
     let duration = "";
     let stack = "";
     let services = [];
+    let breakdown = [];
 
     if (form.projectType === "website") {
       cost =
@@ -41,7 +42,17 @@ export default function ProjectEstimator() {
           : "₹1,00,000+";
       duration = "2 – 4 weeks";
       stack = "React, Node.js";
-      services = ["UI/UX Design", "Website Development", "Deployment"];
+      services = [
+        "UI/UX Design",
+        "Responsive Website Development",
+        "SEO-friendly Structure",
+        "Deployment & Basic Support"
+      ];
+      breakdown = [
+        "Design & UX: ₹15,000",
+        "Development: ₹25,000 – ₹45,000",
+        "Testing & Deployment: ₹10,000"
+      ];
     }
 
     if (form.projectType === "mobile-app") {
@@ -53,71 +64,169 @@ export default function ProjectEstimator() {
           : "₹2,50,000+";
       duration = "1 – 3 months";
       stack = "Flutter / React Native";
-      services = ["UI/UX Design", "App Development", "Testing", "Deployment"];
+      services = [
+        "UI/UX Design",
+        "App Development",
+        "API Integration",
+        "Testing & Deployment"
+      ];
+      breakdown = [
+        "Design & UX: ₹30,000",
+        "Development: ₹70,000 – ₹1,30,000",
+        "Testing & Deployment: ₹20,000"
+      ];
     }
 
     if (form.projectType === "crm") {
       cost = "₹1,50,000+";
       duration = "2 – 4 months";
       stack = "React, Node.js, MongoDB";
-      services = ["CRM Development", "Admin Panel", "Support"];
+      services = [
+        "CRM Development",
+        "Admin Panel",
+        "User Management",
+        "Post-launch Support"
+      ];
+      breakdown = [
+        "System Design: ₹30,000",
+        "Development: ₹1,00,000+",
+        "Testing & Support: ₹20,000"
+      ];
     }
 
-    setResult({ cost, duration, stack, services });
+    setResult({ cost, duration, stack, services, breakdown });
   };
 
+  /* ================== PDF (DETAILED + NO OVERLAP) ================== */
   const generatePDF = () => {
     if (!result) return;
 
     const doc = new jsPDF();
+    const pageHeight = doc.internal.pageSize.height;
+    const marginX = 14;
+    const contentWidth = 180;
     let y = 20;
 
+    const addPageIfNeeded = (space = 8) => {
+      if (y + space > pageHeight - 15) {
+        doc.addPage();
+        y = 20;
+      }
+    };
+
+    const addHeading = (text) => {
+      addPageIfNeeded(12);
+      doc.setFontSize(13);
+      doc.text(text, marginX, y);
+      y += 8;
+    };
+
+    const addParagraph = (text) => {
+      doc.setFontSize(11);
+      const lines = doc.splitTextToSize(text, contentWidth);
+      lines.forEach((line) => {
+        addPageIfNeeded(6);
+        doc.text(line, marginX, y);
+        y += 6;
+      });
+      y += 4;
+    };
+
+    const addBullet = (text) => {
+      const lines = doc.splitTextToSize(`• ${text}`, contentWidth);
+      lines.forEach((line) => {
+        addPageIfNeeded(6);
+        doc.text(line, marginX + 2, y);
+        y += 6;
+      });
+    };
+
+    /* HEADER */
     doc.setFontSize(18);
-    doc.text("Sammunat LLC – Project Estimate", 14, y);
-    y += 10;
+    doc.text("Sammunat LLC", marginX, y);
+    y += 8;
 
-    doc.setFontSize(11);
-    doc.text(`Project Type: ${form.projectType}`, 14, y);
-    y += 6;
-    doc.text(`Business Type: ${form.businessType}`, 14, y);
-    y += 6;
-    doc.text(`Budget: ${form.budget}`, 14, y);
-    y += 6;
-    doc.text(`Timeline: ${form.timeline}`, 14, y);
-    y += 10;
+    doc.setFontSize(12);
+    doc.text("Project Proposal & Cost Estimate", marginX, y);
+    y += 12;
 
-    doc.text(`Estimated Cost: ${result.cost}`, 14, y);
-    y += 6;
-    doc.text(`Duration: ${result.duration}`, 14, y);
-    y += 6;
-    doc.text(`Tech Stack: ${result.stack}`, 14, y);
-    y += 10;
+    /* CLIENT INFO */
+    addHeading("Client Overview");
+    addParagraph(
+      `Business Type: ${form.businessType}\n`
+      + `Project Type: ${form.projectType}\n`
+      + `Budget Preference: ${form.budget}\n`
+      + `Timeline Preference: ${form.timeline}`
+    );
 
-    result.services.forEach((s) => {
-      doc.text(`• ${s}`, 16, y);
-      y += 5;
-    });
+    /* OVERVIEW */
+    addHeading("1. Project Overview");
+    addParagraph(
+      "This document provides a high-level estimate for the requested project based on the initial inputs. "
+      + "The scope, cost, and delivery timeline may change after detailed requirement discussions."
+    );
 
-    doc.save("Sammunat_Project_Estimate.pdf");
+    /* SCOPE */
+    addHeading("2. Scope of Work");
+    result.services.forEach((service) => addBullet(service));
+    y += 4;
+
+    /* TECH STACK */
+    addHeading("3. Technology Stack");
+    addParagraph(result.stack);
+
+    /* TIMELINE */
+    addHeading("4. Estimated Timeline");
+    addParagraph(
+      `Total Estimated Duration: ${result.duration}\n\n`
+      + "Project Phases:\n"
+      + "• Planning & Design\n"
+      + "• Development\n"
+      + "• Testing\n"
+      + "• Deployment"
+    );
+
+    /* COST */
+    addHeading("5. Cost Estimate & Breakdown");
+    addParagraph(`Estimated Cost Range: ${result.cost}`);
+    result.breakdown.forEach((item) => addBullet(item));
+    y += 4;
+
+    /* ASSUMPTIONS */
+    addHeading("6. Assumptions & Exclusions");
+    addParagraph(
+      "• Content, hosting, and third-party tools are not included unless specified.\n"
+      + "• One revision cycle is included by default.\n"
+      + "• Any additional features or scope changes will affect cost and timeline."
+    );
+
+    /* NEXT STEPS */
+    addHeading("7. Next Steps");
+    addParagraph(
+      "To proceed further, please schedule a discovery call with our team. "
+      + "A detailed proposal and final quotation will be shared after requirement analysis."
+    );
+
+    /* FOOTER */
+    addPageIfNeeded(10);
+    doc.setFontSize(10);
+    doc.text(
+      `Generated on: ${new Date().toLocaleDateString()}\n`
+      + "This is a system-generated estimate by Sammunat LLC.",
+      marginX,
+      y
+    );
+
+    doc.save("Sammunat_Detailed_Project_Proposal.pdf");
   };
 
-  /* ---------- UI ---------- */
+  /* ---------- UI (UNCHANGED) ---------- */
   const selectClass =
     "w-full rounded-xl border border-[#D7CFE8] bg-white px-4 py-3 text-sm text-[#534D56] focus:outline-none focus:ring-2 focus:ring-[#1B998B] transition";
 
   return (
     <section className="py-14 bg-gradient-to-b from-[#F8F1FF] to-white">
       <div className="max-w-6xl mx-auto px-4">
-        {/* HEADER */}
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#534D56]">
-            Project Cost Estimator
-          </h2>
-          <p className="mt-3 text-[#656176] text-sm sm:text-base max-w-xl mx-auto">
-            Get an instant idea of cost, timeline, and technology for your project.
-          </p>
-        </div>
-
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8">
             {/* LEFT */}
@@ -246,6 +355,7 @@ export default function ProjectEstimator() {
     </section>
   );
 }
+
 
 
 
