@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MobileDock from "./components/MobileDock";
 
-/* Sections */
+/* Home Sections */
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
 import Partners from "./components/Partners";
@@ -18,6 +18,14 @@ import Newsletter from "./components/Newsletter";
 import CTA from "./components/CTA";
 import About from "./components/About";
 
+/* 🔥 NEW FEATURE */
+import ProjectEstimator from "./components/ProjectEstimator";
+
+/* Auth Pages */
+import Login from "./pages/Login";
+import ClientDashboard from "./pages/ClientDashboard";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+
 /* Blog */
 import BlogSection from "./blog/BlogSection";
 import BlogPost from "./blog/BlogPost";
@@ -26,25 +34,19 @@ import ShareBlogSection from "./blog/ShareBlogSection";
 export default function App() {
   const location = useLocation();
 
-  // hide navbar & dock on blog post page
-  const isBlogPostPage = location.pathname.startsWith("/blog/");
+  // Hide navbar & dock on dashboards and login
+  const hideLayout =
+    location.pathname.startsWith("/client") ||
+    location.pathname.startsWith("/employee") ||
+    location.pathname === "/login";
 
   return (
-    <div
-      className="
-        min-h-screen
-        overflow-x-hidden
-        bg-[#F8F1FF]
-        text-[#534D56]
-
-        /* ✅ IMPORTANT FIX */
-        pb-14 md:pb-0
-      "
-    >
+    <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56] pb-14 md:pb-0">
       {/* Navbar */}
-      {!isBlogPostPage && <Navbar />}
+      {!hideLayout && <Navbar />}
 
       <Routes>
+        {/* ================= HOME PAGE ================= */}
         <Route
           path="/"
           element={
@@ -53,6 +55,10 @@ export default function App() {
               <Stats />
               <Partners />
               <Services />
+
+              {/* 🔥 AI PROJECT ESTIMATOR */}
+              <ProjectEstimator />
+
               <ServiceHighlights />
               <Features />
               <Showcase />
@@ -66,15 +72,22 @@ export default function App() {
           }
         />
 
+        {/* ================= AUTH ================= */}
+        <Route path="/login" element={<Login />} />
+
+        {/* ================= DASHBOARDS ================= */}
+        <Route path="/client/dashboard" element={<ClientDashboard />} />
+        <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+
+        {/* ================= BLOG ================= */}
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
 
-      {/* Mobile Bottom Dock */}
-      {!isBlogPostPage && <MobileDock />}
+      {/* Mobile Dock */}
+      {!hideLayout && <MobileDock />}
 
       {/* Footer */}
-      <Footer />
+      {!hideLayout && <Footer />}
     </div>
   );
 }
-

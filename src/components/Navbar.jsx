@@ -1,9 +1,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 import Dock from "./Dock";
 import HiringModal from "./HiringModal";
 import SearchOverlay from "./SearchOverlay";
+
 import {
   VscHome,
   VscArchive,
@@ -18,6 +22,9 @@ export default function Navbar({ showSearch = true }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showDock, setShowDock] = useState(true);
   const [openHiring, setOpenHiring] = useState(false);
+
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   /* -------- SHOW DOCK ONLY ON HERO (DESKTOP) -------- */
   useEffect(() => {
@@ -68,7 +75,7 @@ export default function Navbar({ showSearch = true }) {
     <>
       {/* ================= HEADER ================= */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#DECDF5]/90 backdrop-blur-lg border-b border-[#534D56]/10">
-        <div className="max-w-7xl mx-auto px-4 py-2 md:py-0 min-h-[56px] md:h-16 flex flex-nowrap items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 py-2 md:py-0 min-h-[56px] md:h-16 flex items-center justify-between gap-3">
 
           {/* LOGO */}
           <div
@@ -104,6 +111,39 @@ export default function Navbar({ showSearch = true }) {
           {/* ACTION BUTTONS */}
           <div className="flex items-center gap-2 md:gap-3">
 
+            {/* DASHBOARD (VISIBLE AFTER LOGIN) */}
+            {user && (
+              <button
+                onClick={() => navigate(`/${user.role}/dashboard`)}
+                className="px-3 md:px-4 py-2 rounded-full border border-[#534D56]/30 text-[#534D56] text-xs md:text-base font-semibold hover:bg-[#534D56]/10 transition"
+              >
+                Dashboard
+              </button>
+            )}
+
+            {/* LOGIN (VISIBLE BEFORE LOGIN) */}
+            {!user && (
+              <Link
+                to="/login"
+                className="px-3 md:px-4 py-2 rounded-full border border-[#534D56]/30 text-[#534D56] text-xs md:text-base font-semibold hover:bg-[#534D56]/10 transition"
+              >
+                Login
+              </Link>
+            )}
+
+            {/* LOGOUT */}
+            {user && (
+              <button
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+                className="px-3 md:px-4 py-2 rounded-full text-red-600 text-xs md:text-base font-semibold hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            )}
+
             {/* GET SERVICES */}
             <button
               onClick={() =>
@@ -112,7 +152,7 @@ export default function Navbar({ showSearch = true }) {
                   "_blank"
                 )
               }
-              className="px-3 md:px-4 py-2 rounded-full border border-[#1B998B] text-[#1B998B] text-xs md:text-base font-semibold hover:bg-[#1B998B] hover:text-white transition whitespace-nowrap"
+              className="px-3 md:px-4 py-2 rounded-full border border-[#1B998B] text-[#1B998B] text-xs md:text-base font-semibold hover:bg-[#1B998B] hover:text-white transition"
             >
               Get Services
             </button>
@@ -120,7 +160,7 @@ export default function Navbar({ showSearch = true }) {
             {/* WE'RE HIRING */}
             <button
               onClick={() => setOpenHiring(true)}
-              className="px-3 md:px-4 py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold hover:scale-105 transition-transform whitespace-nowrap"
+              className="px-3 md:px-4 py-2 rounded-full bg-[#1B998B] text-white text-xs md:text-base font-semibold hover:scale-105 transition-transform"
             >
               We’re Hiring
             </button>
