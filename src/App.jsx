@@ -18,8 +18,11 @@ import Newsletter from "./components/Newsletter";
 import CTA from "./components/CTA";
 import About from "./components/About";
 
-/* 🔥 NEW FEATURE */
+/* 🔥 Custom Features */
 import ProjectEstimator from "./components/ProjectEstimator";
+import ClientPromiseBoard from "./components/ClientPromiseBoard";
+import RealityCheckSlider from "./components/RealityCheckSlider";
+import FounderAdvice from "./components/FounderAdvice";
 
 /* Auth Pages */
 import Login from "./pages/Login";
@@ -34,7 +37,6 @@ import ShareBlogSection from "./blog/ShareBlogSection";
 export default function App() {
   const location = useLocation();
 
-  // Hide navbar & dock on dashboards and login
   const hideLayout =
     location.pathname.startsWith("/client") ||
     location.pathname.startsWith("/employee") ||
@@ -42,11 +44,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56] pb-14 md:pb-0">
-      {/* Navbar */}
+
       {!hideLayout && <Navbar />}
 
       <Routes>
-        {/* ================= HOME PAGE ================= */}
         <Route
           path="/"
           element={
@@ -56,38 +57,37 @@ export default function App() {
               <Partners />
               <Services />
 
-              {/* 🔥 AI PROJECT ESTIMATOR */}
               <ProjectEstimator />
+              <ClientPromiseBoard />
+
+              {/* ⭐ UNIQUE SECTIONS */}
+              <RealityCheckSlider />
+              
 
               <ServiceHighlights />
               <Features />
               <Showcase />
               <RecentWork />
+             
               <BlogSection />
               <ShareBlogSection />
               <Newsletter />
               <CTA />
+               <FounderAdvice />
               <About />
             </>
           }
         />
 
-        {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
-
-        {/* ================= DASHBOARDS ================= */}
         <Route path="/client/dashboard" element={<ClientDashboard />} />
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
-
-        {/* ================= BLOG ================= */}
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
 
-      {/* Mobile Dock */}
       {!hideLayout && <MobileDock />}
-
-      {/* Footer */}
       {!hideLayout && <Footer />}
     </div>
   );
 }
+

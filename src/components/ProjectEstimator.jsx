@@ -6,7 +6,7 @@ export default function ProjectEstimator() {
     projectType: "website",
     businessType: "",
     budget: "medium",
-    timeline: "normal"
+    timeline: "normal",
   });
 
   const [result, setResult] = useState(null);
@@ -46,12 +46,12 @@ export default function ProjectEstimator() {
         "UI/UX Design",
         "Responsive Website Development",
         "SEO-friendly Structure",
-        "Deployment & Basic Support"
+        "Deployment & Basic Support",
       ];
       breakdown = [
         "Design & UX: ₹15,000",
         "Development: ₹25,000 – ₹45,000",
-        "Testing & Deployment: ₹10,000"
+        "Testing & Deployment: ₹10,000",
       ];
     }
 
@@ -68,12 +68,12 @@ export default function ProjectEstimator() {
         "UI/UX Design",
         "App Development",
         "API Integration",
-        "Testing & Deployment"
+        "Testing & Deployment",
       ];
       breakdown = [
         "Design & UX: ₹30,000",
         "Development: ₹70,000 – ₹1,30,000",
-        "Testing & Deployment: ₹20,000"
+        "Testing & Deployment: ₹20,000",
       ];
     }
 
@@ -85,151 +85,76 @@ export default function ProjectEstimator() {
         "CRM Development",
         "Admin Panel",
         "User Management",
-        "Post-launch Support"
+        "Post-launch Support",
       ];
       breakdown = [
         "System Design: ₹30,000",
         "Development: ₹1,00,000+",
-        "Testing & Support: ₹20,000"
+        "Testing & Support: ₹20,000",
       ];
     }
 
     setResult({ cost, duration, stack, services, breakdown });
   };
 
-  /* ================== PDF (DETAILED + NO OVERLAP) ================== */
+  /* ================== PDF ================== */
   const generatePDF = () => {
     if (!result) return;
 
     const doc = new jsPDF();
-    const pageHeight = doc.internal.pageSize.height;
-    const marginX = 14;
-    const contentWidth = 180;
     let y = 20;
 
-    const addPageIfNeeded = (space = 8) => {
-      if (y + space > pageHeight - 15) {
-        doc.addPage();
-        y = 20;
-      }
-    };
-
-    const addHeading = (text) => {
-      addPageIfNeeded(12);
-      doc.setFontSize(13);
-      doc.text(text, marginX, y);
-      y += 8;
-    };
-
-    const addParagraph = (text) => {
-      doc.setFontSize(11);
-      const lines = doc.splitTextToSize(text, contentWidth);
-      lines.forEach((line) => {
-        addPageIfNeeded(6);
-        doc.text(line, marginX, y);
-        y += 6;
-      });
-      y += 4;
-    };
-
-    const addBullet = (text) => {
-      const lines = doc.splitTextToSize(`• ${text}`, contentWidth);
-      lines.forEach((line) => {
-        addPageIfNeeded(6);
-        doc.text(line, marginX + 2, y);
-        y += 6;
-      });
-    };
-
-    /* HEADER */
     doc.setFontSize(18);
-    doc.text("Sammunat LLC", marginX, y);
+    doc.text("Sammunat LLC", 14, y);
     y += 8;
 
     doc.setFontSize(12);
-    doc.text("Project Proposal & Cost Estimate", marginX, y);
+    doc.text("Project Proposal & Cost Estimate", 14, y);
     y += 12;
 
-    /* CLIENT INFO */
-    addHeading("Client Overview");
-    addParagraph(
-      `Business Type: ${form.businessType}\n`
-      + `Project Type: ${form.projectType}\n`
-      + `Budget Preference: ${form.budget}\n`
-      + `Timeline Preference: ${form.timeline}`
-    );
+    doc.setFontSize(11);
+    doc.text(`Business Type: ${form.businessType}`, 14, y);
+    y += 6;
+    doc.text(`Project Type: ${form.projectType}`, 14, y);
+    y += 6;
+    doc.text(`Estimated Cost: ${result.cost}`, 14, y);
+    y += 6;
+    doc.text(`Timeline: ${result.duration}`, 14, y);
+    y += 10;
 
-    /* OVERVIEW */
-    addHeading("1. Project Overview");
-    addParagraph(
-      "This document provides a high-level estimate for the requested project based on the initial inputs. "
-      + "The scope, cost, and delivery timeline may change after detailed requirement discussions."
-    );
+    doc.text("Included Services:", 14, y);
+    y += 6;
+    result.services.forEach((s) => {
+      doc.text(`• ${s}`, 16, y);
+      y += 6;
+    });
 
-    /* SCOPE */
-    addHeading("2. Scope of Work");
-    result.services.forEach((service) => addBullet(service));
-    y += 4;
-
-    /* TECH STACK */
-    addHeading("3. Technology Stack");
-    addParagraph(result.stack);
-
-    /* TIMELINE */
-    addHeading("4. Estimated Timeline");
-    addParagraph(
-      `Total Estimated Duration: ${result.duration}\n\n`
-      + "Project Phases:\n"
-      + "• Planning & Design\n"
-      + "• Development\n"
-      + "• Testing\n"
-      + "• Deployment"
-    );
-
-    /* COST */
-    addHeading("5. Cost Estimate & Breakdown");
-    addParagraph(`Estimated Cost Range: ${result.cost}`);
-    result.breakdown.forEach((item) => addBullet(item));
-    y += 4;
-
-    /* ASSUMPTIONS */
-    addHeading("6. Assumptions & Exclusions");
-    addParagraph(
-      "• Content, hosting, and third-party tools are not included unless specified.\n"
-      + "• One revision cycle is included by default.\n"
-      + "• Any additional features or scope changes will affect cost and timeline."
-    );
-
-    /* NEXT STEPS */
-    addHeading("7. Next Steps");
-    addParagraph(
-      "To proceed further, please schedule a discovery call with our team. "
-      + "A detailed proposal and final quotation will be shared after requirement analysis."
-    );
-
-    /* FOOTER */
-    addPageIfNeeded(10);
-    doc.setFontSize(10);
-    doc.text(
-      `Generated on: ${new Date().toLocaleDateString()}\n`
-      + "This is a system-generated estimate by Sammunat LLC.",
-      marginX,
-      y
-    );
-
-    doc.save("Sammunat_Detailed_Project_Proposal.pdf");
+    doc.save("Sammunat_Project_Estimate.pdf");
   };
 
-  /* ---------- UI (UNCHANGED) ---------- */
-  const selectClass =
-    "w-full rounded-xl border border-[#D7CFE8] bg-white px-4 py-3 text-sm text-[#534D56] focus:outline-none focus:ring-2 focus:ring-[#1B998B] transition";
+  const inputClass =
+    "w-full rounded-xl border border-[#D7CFE8] bg-white px-4 py-3 text-sm text-[#534D56] focus:outline-none focus:ring-2 focus:ring-[#1B998B] hover:border-[#1B998B] transition-all duration-300";
 
   return (
-    <section className="py-14 bg-gradient-to-b from-[#F8F1FF] to-white">
+    <section className="py-20 bg-gradient-to-b from-[#F8F1FF] to-white">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-8">
-            {/* LEFT */}
+
+        {/* HEADING */}
+        <div className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            Project Estimator
+          </h2>
+          <p className="text-lg text-[#6b6570] max-w-2xl mx-auto">
+            Get a transparent cost & timeline estimate for your project —
+            before you commit.
+          </p>
+        </div>
+
+        {/* CARD */}
+        <div className="bg-white rounded-3xl shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 sm:p-10">
+
+            {/* LEFT FORM */}
             <div className="space-y-5">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -239,7 +164,7 @@ export default function ProjectEstimator() {
                   name="projectType"
                   value={form.projectType}
                   onChange={handleChange}
-                  className={selectClass}
+                  className={inputClass}
                 >
                   <option value="website">Website</option>
                   <option value="mobile-app">Mobile App</option>
@@ -256,7 +181,7 @@ export default function ProjectEstimator() {
                   value={form.businessType}
                   onChange={handleChange}
                   placeholder="Startup, Shop, Enterprise..."
-                  className={selectClass}
+                  className={inputClass}
                 />
               </div>
 
@@ -268,7 +193,7 @@ export default function ProjectEstimator() {
                   name="budget"
                   value={form.budget}
                   onChange={handleChange}
-                  className={selectClass}
+                  className={inputClass}
                 >
                   <option value="low">Low Budget</option>
                   <option value="medium">Medium Budget</option>
@@ -284,7 +209,7 @@ export default function ProjectEstimator() {
                   name="timeline"
                   value={form.timeline}
                   onChange={handleChange}
-                  className={selectClass}
+                  className={inputClass}
                 >
                   <option value="fast">Urgent</option>
                   <option value="normal">Normal</option>
@@ -292,16 +217,14 @@ export default function ProjectEstimator() {
                 </select>
               </div>
 
-              {error && (
-                <p className="text-sm text-red-600">{error}</p>
-              )}
+              {error && <p className="text-sm text-red-600">{error}</p>}
 
               <button
                 onClick={estimateProject}
                 disabled={!canGenerate()}
-                className={`w-full py-3 rounded-xl font-semibold transition ${
+                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
                   canGenerate()
-                    ? "bg-[#1B998B] text-white hover:opacity-90"
+                    ? "bg-[#1B998B] text-white hover:scale-[1.02] hover:shadow-lg"
                     : "bg-[#E8E1F3] text-[#9E95B6] cursor-not-allowed"
                 }`}
               >
@@ -309,7 +232,7 @@ export default function ProjectEstimator() {
               </button>
             </div>
 
-            {/* RIGHT */}
+            {/* RIGHT RESULT */}
             <div className="bg-[#F8F1FF] rounded-2xl p-6 flex flex-col justify-between">
               {!result ? (
                 <div className="flex items-center justify-center h-full text-center text-[#656176]">
@@ -328,11 +251,11 @@ export default function ProjectEstimator() {
                       <p><b>Tech:</b> {result.stack}</p>
                     </div>
 
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-5 space-y-2">
                       {result.services.map((s, i) => (
                         <li
                           key={i}
-                          className="bg-white rounded-lg px-4 py-2 shadow-sm text-sm"
+                          className="bg-white rounded-lg px-4 py-2 shadow-sm text-sm hover:shadow-md transition"
                         >
                           {s}
                         </li>
@@ -342,13 +265,14 @@ export default function ProjectEstimator() {
 
                   <button
                     onClick={generatePDF}
-                    className="mt-6 w-full border border-[#1B998B] text-[#1B998B] py-3 rounded-xl font-semibold hover:bg-[#1B998B] hover:text-white transition"
+                    className="mt-6 w-full border border-[#1B998B] text-[#1B998B] py-4 rounded-xl font-semibold hover:bg-[#1B998B] hover:text-white transition-all duration-300"
                   >
                     Download Proposal (PDF)
                   </button>
                 </>
               )}
             </div>
+
           </div>
         </div>
       </div>
