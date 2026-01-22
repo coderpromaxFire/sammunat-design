@@ -4,14 +4,26 @@ import { saveOTP, verifyOTP } from "./otpStore.js";
 
 const router = express.Router();
 
-/* ---------- SMTP TRANSPORT ---------- */
+/* ---------- SMTP TRANSPORT (HOSTINGER FIXED) ---------- */
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: Number(process.env.EMAIL_PORT),
-  secure: process.env.EMAIL_SECURE === "true",
+  host: process.env.EMAIL_HOST || "smtp.hostinger.com",
+  port: 587,                 // Hostinger requires 587
+  secure: false,             // MUST be false for 587
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false, // IMPORTANT for Hostinger
+  },
+});
+
+/* ---------- VERIFY SMTP CONNECTION ---------- */
+transporter.verify((err, success) => {
+  if (err) {
+    console.error("❌ SMTP connection failed:", err);
+  } else {
+    console.log("✅ Hostinger SMTP connected");
   }
 });
 
@@ -23,7 +35,10 @@ router.post("/send-otp", async (req, res) => {
     return res.status(400).json({ message: "Email is required" });
   }
 
+  // Generate 6-digit OTP
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Save OTP with expiry (handled in otpStore.js)
   saveOTP(email, otp);
 
   try {
@@ -38,14 +53,18 @@ router.post("/send-otp", async (req, res) => {
           <h1 style="letter-spacing: 4px">${otp}</h1>
           <p>This OTP is valid for <b>5 minutes</b>.</p>
           <p>If you did not request this, please ignore this email.</p>
+          <br/>
+          <p style="font-size: 12px; color: #777">
+            © Sammunat LLC — Secure Login System
+          </p>
         </div>
-      `
+      `,
     });
 
-    res.json({ message: "OTP sent successfully" });
+    return res.json({ message: "OTP sent successfully" });
   } catch (err) {
-    console.error("Email send error:", err);
-    res.status(500).json({ message: "Failed to send OTP" });
+    console.error("❌ Email send error:", err);
+    return res.status(500).json({ message: "Failed to send OTP" });
   }
 });
 
@@ -54,16 +73,22 @@ router.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
 
   if (!email || !otp) {
-    return res.status(400).json({ message: "Email and OTP are required" });
+    return res.status(400).json({
+      message: "Email and OTP are required",
+    });
   }
 
   const isValid = verifyOTP(email, otp);
 
   if (!isValid) {
-    return res.status(400).json({ message: "Invalid or expired OTP" });
+    return res.status(400).json({
+      message: "Invalid or expired OTP",
+    });
   }
 
-  res.json({ message: "OTP verified successfully" });
+  return res.json({
+    message: "OTP verified successfully",
+  });
 });
 
 export default router;
