@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(1); // 1=email, 2=otp, 3=success
+  const [step, setStep] = useState(1);
   const [role, setRole] = useState(
     localStorage.getItem("loginRole") || "client"
   );
@@ -14,7 +16,6 @@ export default function Login() {
   const [timer, setTimer] = useState(0);
 
   const intervalRef = useRef(null);
-
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export default function Login() {
     localStorage.setItem("loginRole", role);
   }, [role]);
 
-  /* ---------- CLEAN TIMER ---------- */
+  /* ---------- TIMER ---------- */
   useEffect(() => {
     if (timer <= 0) {
       clearInterval(intervalRef.current);
@@ -49,10 +50,10 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/send-otp", {
+      const res = await fetch(`${API_URL}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email }),
       });
 
       if (!res.ok) throw new Error();
@@ -78,10 +79,10 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/verify-otp", {
+      const res = await fetch(`${API_URL}/api/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp })
+        body: JSON.stringify({ email, otp }),
       });
 
       if (!res.ok) throw new Error();
@@ -100,10 +101,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#F8F1FF] to-[#EFE7FF] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F8F1FF] to-[#EFE7FF] px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-
-        {/* HEADER */}
         <div className="text-center mb-6">
           <h1 className="text-xl sm:text-2xl font-bold text-[#534D56]">
             Secure Login
@@ -115,24 +114,17 @@ export default function Login() {
           </p>
         </div>
 
-        {/* ERROR */}
         {error && (
-          <div className="mb-4 text-center text-sm text-red-600">
-            {error}
-          </div>
+          <div className="mb-4 text-center text-sm text-red-600">{error}</div>
         )}
 
-        {/* SUCCESS */}
         {step === 3 && (
           <div className="text-center py-8">
             <div className="text-3xl mb-2">✅</div>
-            <p className="font-semibold text-[#1B998B]">
-              Login successful
-            </p>
+            <p className="font-semibold text-[#1B998B]">Login successful</p>
           </div>
         )}
 
-        {/* ROLE */}
         {step !== 3 && (
           <div className="mb-4">
             <label className="block mb-1 text-sm font-medium text-[#534D56]">
@@ -141,7 +133,7 @@ export default function Login() {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-lg border border-[#534D56]/20 px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1B998B]"
+              className="w-full rounded-lg border px-4 py-3"
             >
               <option value="client">Client</option>
               <option value="employee">Employee</option>
@@ -149,52 +141,39 @@ export default function Login() {
           </div>
         )}
 
-        {/* STEP 1 */}
         {step === 1 && (
           <>
-            <div className="mb-4">
-              <label className="block mb-1 text-sm font-medium text-[#534D56]">
-                Email address
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="w-full rounded-lg border border-[#534D56]/20 px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1B998B]"
-              />
-            </div>
-
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full rounded-lg border px-4 py-3 mb-4"
+            />
             <button
               onClick={sendOtp}
               disabled={loading}
-              className="w-full py-3 rounded-lg bg-[#1B998B] text-white font-semibold hover:opacity-90 disabled:opacity-60"
+              className="w-full py-3 rounded-lg bg-[#1B998B] text-white"
             >
               {loading ? "Sending OTP..." : "Send OTP"}
             </button>
           </>
         )}
 
-        {/* STEP 2 */}
         {step === 2 && (
           <>
-            <div className="mb-4">
-              <label className="block mb-1 text-sm font-medium text-[#534D56]">
-                Enter OTP
-              </label>
-              <input
-                type="number"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="6-digit OTP"
-                className="w-full rounded-lg border border-[#534D56]/20 px-4 py-3 text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#1B998B]"
-              />
-            </div>
+            <input
+              type="number"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="6-digit OTP"
+              className="w-full rounded-lg border px-4 py-3 mb-4"
+            />
 
             <button
               onClick={verifyOtp}
               disabled={loading}
-              className="w-full py-3 rounded-lg bg-[#1B998B] text-white font-semibold hover:opacity-90 disabled:opacity-60"
+              className="w-full py-3 rounded-lg bg-[#1B998B] text-white"
             >
               {loading ? "Verifying..." : "Verify & Continue"}
             </button>
@@ -202,16 +181,9 @@ export default function Login() {
             <button
               onClick={sendOtp}
               disabled={timer > 0}
-              className="mt-3 w-full text-sm text-[#656176] disabled:opacity-50"
+              className="mt-3 w-full text-sm"
             >
               {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
-            </button>
-
-            <button
-              onClick={() => setStep(1)}
-              className="mt-2 w-full text-sm text-[#656176]"
-            >
-              Change email
             </button>
           </>
         )}
