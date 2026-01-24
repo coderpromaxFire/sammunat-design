@@ -18,11 +18,15 @@ import Newsletter from "./components/Newsletter";
 import CTA from "./components/CTA";
 import About from "./components/About";
 
-/* 🔥 Custom Features */
+/* 🔥 Custom Business Features */
 import ProjectEstimator from "./components/ProjectEstimator";
 import ClientPromiseBoard from "./components/ClientPromiseBoard";
 import RealityCheckSlider from "./components/RealityCheckSlider";
 import FounderAdvice from "./components/FounderAdvice";
+
+/* 🧠 Learning Hub (FOR EVERYONE) */
+import PlaybookSection from "./playbook/PlaybookSection";
+import PlaybookArticle from "./playbook/PlaybookArticle";
 
 /* Auth Pages */
 import Login from "./pages/Login";
@@ -44,10 +48,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56] pb-14 md:pb-0">
-
+      {/* NAVBAR */}
       {!hideLayout && <Navbar />}
 
       <Routes>
+        {/* ================= HOME ================= */}
         <Route
           path="/"
           element={
@@ -57,34 +62,44 @@ export default function App() {
               <Partners />
               <Services />
 
+              {/* Business-first tools */}
               <ProjectEstimator />
               <ClientPromiseBoard />
-
-              {/* ⭐ UNIQUE SECTIONS */}
               <RealityCheckSlider />
-              
+
+              {/* 🔥 LEARNING HUB ENTRY */}
+              <PlaybookSection />
 
               <ServiceHighlights />
               <Features />
               <Showcase />
               <RecentWork />
-             
+
               <BlogSection />
               <ShareBlogSection />
               <Newsletter />
               <CTA />
-               <FounderAdvice />
+              <FounderAdvice />
               <About />
             </>
           }
         />
 
+        {/* ================= PLAYBOOK ARTICLES ================= */}
+        <Route path="/playbook/:slug" element={<PlaybookArticle />} />
+
+        {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
+
+        {/* ================= DASHBOARDS ================= */}
         <Route path="/client/dashboard" element={<ClientDashboard />} />
         <Route path="/employee/dashboard" element={<EmployeeDashboard />} />
+
+        {/* ================= BLOG ================= */}
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
 
+      {/* MOBILE + FOOTER */}
       {!hideLayout && <MobileDock />}
       {!hideLayout && <Footer />}
     </div>
