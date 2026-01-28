@@ -1,39 +1,32 @@
-import { motion } from "framer-motion";
+
+
+
 import BlogCard from "./BlogCard";
-import { useBlogs } from "./useBlogs";
+import blogData from "./blogData";
 
 export default function BlogSection() {
-  const { blogs, loading } = useBlogs();
-
-  if (loading) {
+  if (!blogData || blogData.length === 0) {
     return (
-      <div className="py-20 text-center text-[#656176]">
-        Loading blogs...
-      </div>
+      <section className="py-24 text-center">
+        <p className="text-[#656176]">No blogs available.</p>
+      </section>
     );
   }
 
   return (
-    <section id="blog" className="py-20 md:py-40 px-4 md:px-6 bg-white">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto text-center mb-12 md:mb-20"
-      >
-        <h2 className="text-3xl md:text-5xl font-extrabold text-[#534D56]">
+    <section className="py-24 px-6 bg-[#F8F1FF]">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-[#534D56] mb-12">
           Writing & Insights
         </h2>
-      </motion.div>
 
-      <div className="max-w-6xl mx-auto grid gap-6 md:gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog, index) => (
-          <BlogCard key={blog.slug} blog={blog} index={index} />
-        ))}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {blogData.map((blog, index) => (
+            <BlogCard key={blog.slug} blog={blog} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
-
-
 

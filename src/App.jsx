@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 
-/* Layout */
+/* ========== Layout ========== */
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MobileDock from "./components/MobileDock";
 
-/* Home Sections */
+/* ========== Home Sections ========== */
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
 import Partners from "./components/Partners";
@@ -18,37 +18,49 @@ import Newsletter from "./components/Newsletter";
 import CTA from "./components/CTA";
 import About from "./components/About";
 
-/* 🔥 Custom Business Features */
+/* ========== Business / Extras ========== */
 import ProjectEstimator from "./components/ProjectEstimator";
 import ClientPromiseBoard from "./components/ClientPromiseBoard";
 import RealityCheckSlider from "./components/RealityCheckSlider";
 import FounderAdvice from "./components/FounderAdvice";
 
-/* 🧠 Learning Hub (FOR EVERYONE) */
-import PlaybookSection from "./playbook/PlaybookSection";
-import PlaybookArticle from "./playbook/PlaybookArticle";
+/* ========== 🎓 Student Corner ========== */
+import StudentCorner from "./components/StudentCorner";
+import StudentHome from "./pages/StudentHome";
 
-/* Auth Pages */
+/* ========== Student Pages ========== */
+import Careers from "./pages/students/Careers";
+import Roadmaps from "./pages/students/Roadmaps";
+import Internships from "./pages/students/Internships";
+import Tools from "./pages/students/Tools";
+import Guidance from "./pages/students/Guidance";
+import AssessmentRunner from "./pages/students/AssessmentRunner";
+
+/* ========== Auth / Dashboards ========== */
 import Login from "./pages/Login";
 import ClientDashboard from "./pages/ClientDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 
-/* Blog */
+/* ========== Blog ========== */
 import BlogSection from "./blog/BlogSection";
 import BlogPost from "./blog/BlogPost";
 import ShareBlogSection from "./blog/ShareBlogSection";
 
+
 export default function App() {
   const location = useLocation();
 
+  /* ===== Hide Navbar, Dock, Footer on these routes ===== */
   const hideLayout =
+    location.pathname.startsWith("/students") ||
     location.pathname.startsWith("/client") ||
     location.pathname.startsWith("/employee") ||
     location.pathname === "/login";
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56] pb-14 md:pb-0">
-      {/* NAVBAR */}
+    <div className="min-h-screen overflow-x-hidden bg-[#F8F1FF] text-[#534D56]">
+
+      {/* ===== NAVBAR ===== */}
       {!hideLayout && <Navbar />}
 
       <Routes>
@@ -62,13 +74,12 @@ export default function App() {
               <Partners />
               <Services />
 
-              {/* Business-first tools */}
               <ProjectEstimator />
               <ClientPromiseBoard />
               <RealityCheckSlider />
 
-              {/* 🔥 LEARNING HUB ENTRY */}
-              <PlaybookSection />
+              {/* ⭐ Student Corner entry */}
+              <StudentCorner />
 
               <ServiceHighlights />
               <Features />
@@ -85,8 +96,19 @@ export default function App() {
           }
         />
 
-        {/* ================= PLAYBOOK ARTICLES ================= */}
-        <Route path="/playbook/:slug" element={<PlaybookArticle />} />
+        {/* ================= STUDENT CORNER ================= */}
+        <Route path="/students" element={<StudentHome />} />
+        <Route path="/students/careers" element={<Careers />} />
+        <Route path="/students/roadmaps" element={<Roadmaps />} />
+        <Route path="/students/internships" element={<Internships />} />
+        <Route path="/students/tools" element={<Tools />} />
+        <Route path="/students/guidance" element={<Guidance />} />
+
+        {/* ===== 🎯 STUDENT ASSESSMENTS ===== */}
+        <Route
+          path="/students/assessments/:domain"
+          element={<AssessmentRunner />}
+        />
 
         {/* ================= AUTH ================= */}
         <Route path="/login" element={<Login />} />
@@ -99,10 +121,21 @@ export default function App() {
         <Route path="/blog/:slug" element={<BlogPost />} />
       </Routes>
 
-      {/* MOBILE + FOOTER */}
+      {/* ===== MOBILE DOCK & FOOTER ===== */}
       {!hideLayout && <MobileDock />}
       {!hideLayout && <Footer />}
     </div>
   );
 }
 
+
+// import { Routes, Route } from "react-router-dom";
+// import StudentHome from "./pages/StudentHome";
+
+// export default function App() {
+//   return (
+//     <Routes>
+//       <Route path="/" element={<StudentHome />} />
+//     </Routes>
+//   );
+// }

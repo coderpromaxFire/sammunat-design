@@ -1,79 +1,64 @@
-// src/blog/blogData.jsx
+// src/blog/blogData.js
 
-export const blogs = [
+const blogData = [
   {
-    slug: "how-i-learned-react",
-    title: "How I Learned React as a Beginner",
-    date: "Jan 5, 2026",
-    author: "Komal Bavoria",
-    readTime: 6,
+    slug: "why-every-student-needs-skills",
+    title: "Why Every Student Needs Real-World Skills",
     excerpt:
-      "A practical breakdown of how I approached learning React without feeling overwhelmed.",
-    content: (
-      <>
-        <p>
-          When I first started learning React, everything felt confusing —
-          components, props, state, hooks. I didn’t know where to begin.
-        </p>
-
-        <p>
-          I was jumping between tutorials, copying code without understanding
-          it. That only increased my frustration.
-        </p>
-
-        <h2>What Changed Everything</h2>
-
-        <p>
-          I stopped chasing tutorials and started asking one question:
-          <strong> why does React exist?</strong>
-        </p>
-
-        <p>
-          Once I understood that React is about managing UI as a function of
-          state, things slowly started making sense.
-        </p>
-
-        <h2>My Advice</h2>
-
-        <p>
-          Build small things. Break them. Feel confused. That’s how learning
-          actually happens.
-        </p>
-      </>
-    )
+      "Degrees alone are not enough anymore. Learn why practical skills define your career.",
+    date: "Jan 20, 2026",
+    readTime: 4,
+    author: "Sammunat Team",
+    content: [
+      {
+        type: "paragraph",
+        text:
+          "The world is changing faster than education systems. Degrees are valuable, but skills decide outcomes.",
+      },
+      {
+        type: "heading",
+        text: "Why skills matter",
+      },
+      {
+        type: "list",
+        items: [
+          "Employers hire for problem-solving",
+          "Skills show real capability",
+          "Projects speak louder than marks",
+        ],
+      },
+      {
+        type: "paragraph",
+        text:
+          "Students who focus on building skills early gain confidence and clarity.",
+      },
+    ],
   },
 
   {
-    slug: "consistency-over-motivation",
-    title: "Consistency Beats Motivation Every Time",
-    date: "Dec 28, 2025",
-    author: "Komal Bavoria",
-    readTime: 4,
+    slug: "how-to-prepare-for-tech-internships",
+    title: "How to Prepare for Tech Internships",
     excerpt:
-      "Why motivation fails long-term and how consistency quietly builds real progress.",
-    content: (
-      <>
-        <p>
-          Motivation feels powerful — but it’s unreliable. Some days you have it,
-          most days you don’t.
-        </p>
-
-        <p>
-          Consistency doesn’t feel exciting. It feels boring. And that’s why it
-          works.
-        </p>
-
-        <h2>The Shift</h2>
-
-        <p>
-          I stopped asking “Do I feel like coding today?” and instead asked:
-          “What is the smallest thing I can do today?”
-        </p>
-
-        <p>
-          That one shift changed my progress completely.
-        </p>
-      </>
-    )
-  }
+      "A clear roadmap to crack internships without burning out.",
+    date: "Jan 18, 2026",
+    readTime: 5,
+    author: "Sammunat Team",
+    content: [
+      {
+        type: "paragraph",
+        text:
+          "Internships are about learning, not perfection. Preparation matters more than certificates.",
+      },
+      {
+        type: "list",
+        items: [
+          "Understand fundamentals",
+          "Build 2–3 solid projects",
+          "Practice explaining your work",
+        ],
+      },
+    ],
+  },
 ];
+
+export default blogData;
