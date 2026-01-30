@@ -34,7 +34,11 @@ import Roadmaps from "./pages/students/Roadmaps";
 import Internships from "./pages/students/Internships";
 import Tools from "./pages/students/Tools";
 import Guidance from "./pages/students/Guidance";
-import AssessmentRunner from "./pages/students/AssessmentRunner";
+
+/* ===== 🎯 STUDENT ASSESSMENT FLOW ===== */
+import StudentDetails from "./pages/students/StudentDetails";
+import AssessmentPage from "./pages/students/AssessmentPage";
+import AssessmentResult from "./pages/students/AssessmentResult";
 
 /* ========== Auth / Dashboards ========== */
 import Login from "./pages/Login";
@@ -45,7 +49,6 @@ import EmployeeDashboard from "./pages/EmployeeDashboard";
 import BlogSection from "./blog/BlogSection";
 import BlogPost from "./blog/BlogPost";
 import ShareBlogSection from "./blog/ShareBlogSection";
-
 
 export default function App() {
   const location = useLocation();
@@ -104,10 +107,23 @@ export default function App() {
         <Route path="/students/tools" element={<Tools />} />
         <Route path="/students/guidance" element={<Guidance />} />
 
-        {/* ===== 🎯 STUDENT ASSESSMENTS ===== */}
+        {/* ================= 🎯 ASSESSMENTS (FINAL FLOW) ================= */}
+        {/* Step 1: Student details */}
+        <Route
+          path="/students/assessments/:domain/details"
+          element={<StudentDetails />}
+        />
+
+        {/* Step 2: Assessment test */}
         <Route
           path="/students/assessments/:domain"
-          element={<AssessmentRunner />}
+          element={<AssessmentPage />}
+        />
+
+        {/* Step 3: Result + Certificate */}
+        <Route
+          path="/students/assessments/:domain/result"
+          element={<AssessmentResult />}
         />
 
         {/* ================= AUTH ================= */}
@@ -127,15 +143,3 @@ export default function App() {
     </div>
   );
 }
-
-
-// import { Routes, Route } from "react-router-dom";
-// import StudentHome from "./pages/StudentHome";
-
-// export default function App() {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<StudentHome />} />
-//     </Routes>
-//   );
-// }

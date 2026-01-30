@@ -149,7 +149,7 @@ export default function StudentHome() {
             {assessmentDomains.map((domain) => (
               <Link
                 key={domain.slug}
-                to={`/students/assessments/${domain.slug}`}
+                to={`/students/assessments/${domain.slug}/details`}
                 className="relative bg-white p-6 rounded-2xl shadow border hover:scale-[1.02] transition"
               >
                 <span className="absolute top-3 left-3 text-xs bg-[#1B998B] text-white px-2 py-0.5 rounded">
@@ -165,13 +165,12 @@ export default function StudentHome() {
                 </p>
 
                 <span className="mt-4 inline-block text-[#1B998B] font-medium">
-                  Take assessment →
+                  Start assessment →
                 </span>
               </Link>
             ))}
           </div>
 
-          {/* Disclaimer */}
           <div className="mt-10 p-6 bg-[#1B998B]/10 rounded-2xl text-sm text-[#534D56]">
             <strong>Important:</strong> Sammunat Skill Readiness Certificates
             validate foundational understanding and problem-solving ability.
