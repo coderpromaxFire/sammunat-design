@@ -141,35 +141,7 @@ export default function About() {
           </motion.div>
         </motion.div>
 
-        {/* ================= SMALL LOCATION STRIP ================= */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="
-            mb-16
-            px-6 py-4
-            bg-white/60
-            backdrop-blur
-            rounded-xl
-            border border-[#1B998B]/20
-            flex flex-col md:flex-row
-            md:items-center
-            md:justify-between
-            gap-2
-            text-sm
-          "
-        >
-          <span className="font-semibold text-[#1B998B]">
-            📍 Sammunat LLC
-          </span>
-          <span className="text-[#656176]">
-            Missoula, Montana, USA · Serving clients globally
-          </span>
-        </motion.div>
-
-        {/* ================= CONTACT ================= */}
+        {/* ================= CONTACT & LOCATION ================= */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -180,53 +152,70 @@ export default function About() {
             rounded-2xl md:rounded-3xl
             px-6 md:px-14
             py-10 md:py-14
-            flex flex-col md:flex-row
-            items-center
-            justify-between
-            gap-6
             text-white
-            mb-14
+            mb-16
           "
         >
-          <div>
-            <p className="text-sm md:text-base opacity-90">
-              Let’s build something your customers will love.
-            </p>
-            <p className="mt-1 text-sm md:text-lg font-semibold">
-              contact@sammunat.com • +971 58 874 9689
-            </p>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
 
-          <div className="flex gap-4">
-            <a
-              href="https://www.linkedin.com/company/sammunat/posts/?feedView=all"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-11 h-11 rounded-full bg-[#0A66C2] flex items-center justify-center hover:scale-110 transition-transform"
-            >
-              <FaLinkedinIn />
-            </a>
+            {/* Contact */}
+            <div>
+              <h4 className="text-lg font-semibold">Contact</h4>
+              <p className="mt-2 text-sm opacity-90">
+                contact@sammunat.com
+              </p>
+              <p className="text-sm opacity-90">
+                +971 58 874 9689
+              </p>
+            </div>
 
-            <a
-              href="https://www.instagram.com/sammunat_llc/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-11 h-11 rounded-full bg-pink-500 flex items-center justify-center hover:scale-110 transition-transform"
-            >
-              <FaInstagram />
-            </a>
+            {/* Location */}
+            <div>
+              <h4 className="text-lg font-semibold">Location</h4>
+              <p className="mt-2 text-sm opacity-90">
+                Sammunat LLC
+              </p>
+              <p className="text-sm opacity-90">
+                Missoula, Montana, USA
+              </p>
+              <p className="text-sm opacity-80">
+                Serving clients globally
+              </p>
+            </div>
+
+            {/* Social */}
+            <div className="flex md:justify-end gap-4">
+              <a
+                href="https://www.linkedin.com/company/sammunat/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 rounded-full bg-[#0A66C2] flex items-center justify-center hover:scale-110 transition-transform"
+              >
+                <FaLinkedinIn />
+              </a>
+
+              <a
+                href="https://www.instagram.com/sammunat_llc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 rounded-full bg-pink-500 flex items-center justify-center hover:scale-110 transition-transform"
+              >
+                <FaInstagram />
+              </a>
+            </div>
+
           </div>
         </motion.div>
 
         {/* ================= CREDIT ================= */}
         <div className="text-center">
           <div className="inline-block bg-white/70 backdrop-blur px-6 py-3 rounded-full text-xs md:text-sm text-[#656176] border border-[#1B998B]/20">
-            Website crafted with 💜 by <strong>Komal Bavoria</strong> ·
+            Website crafted with care ·{" "}
             <a
-              href="mailto:komalbavoria17@gmail.com"
-              className="ml-1 text-[#1B998B] font-semibold hover:underline"
+              href="mailto:dev@sammunat.com"
+              className="text-[#1B998B] font-semibold hover:underline"
             >
-              komalbavoria17@gmail.com
+             devstudio12@gmail.com
             </a>
           </div>
         </div>
@@ -235,6 +224,7 @@ export default function About() {
     </section>
   );
 }
+
 
 
 
