@@ -15,13 +15,10 @@ const cardVariants = {
 
 export default function About() {
   return (
-    <section
-      id="about"
-      className="bg-[#DECDF5] py-24 md:py-36 px-4"
-    >
+    <section id="about" className="bg-[#DECDF5] py-24 md:py-36 px-4">
       <div className="max-w-7xl mx-auto">
 
-        {/* ================= ABOUT US (MAIN EMPHASIS) ================= */}
+        {/* ================= ABOUT US ================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -100,7 +97,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 mb-24"
+          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 mb-20"
         >
           <div>
             <h3 className="text-2xl md:text-3xl font-bold text-[#534D56]">
@@ -135,16 +132,44 @@ export default function About() {
               Why clients choose us
             </h4>
 
-            <ul className="mt-6 space-y-4 text-sm md:text-base text-[#656176]">
+            <ul className="mt-6 space-y-3 text-sm md:text-base text-[#656176]">
               <li>• Strong customer-first mindset</li>
-              <li>• Clean, maintainable codebases</li>
-              <li>• Honest guidance & ownership</li>
-              <li>• Long-term product thinking</li>
+              <li>• Clean, scalable code</li>
+              <li>• Honest communication</li>
+              <li>• Long-term thinking</li>
             </ul>
           </motion.div>
         </motion.div>
 
-        {/* ================= CONTACT + SOCIAL ================= */}
+        {/* ================= SMALL LOCATION STRIP ================= */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="
+            mb-16
+            px-6 py-4
+            bg-white/60
+            backdrop-blur
+            rounded-xl
+            border border-[#1B998B]/20
+            flex flex-col md:flex-row
+            md:items-center
+            md:justify-between
+            gap-2
+            text-sm
+          "
+        >
+          <span className="font-semibold text-[#1B998B]">
+            📍 Sammunat LLC
+          </span>
+          <span className="text-[#656176]">
+            Missoula, Montana, USA · Serving clients globally
+          </span>
+        </motion.div>
+
+        {/* ================= CONTACT ================= */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -160,6 +185,7 @@ export default function About() {
             justify-between
             gap-6
             text-white
+            mb-14
           "
         >
           <div>
@@ -172,45 +198,38 @@ export default function About() {
           </div>
 
           <div className="flex gap-4">
-            {/* LinkedIn */}
             <a
               href="https://www.linkedin.com/company/sammunat/posts/?feedView=all"
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                w-11 h-11
-                rounded-full
-                bg-[#0A66C2]
-                flex items-center justify-center
-                text-white
-                hover:scale-110
-                transition-transform
-              "
-              aria-label="LinkedIn"
+              className="w-11 h-11 rounded-full bg-[#0A66C2] flex items-center justify-center hover:scale-110 transition-transform"
             >
               <FaLinkedinIn />
             </a>
 
-            {/* Instagram */}
             <a
               href="https://www.instagram.com/sammunat_llc/"
               target="_blank"
               rel="noopener noreferrer"
-              className="
-                w-11 h-11
-                rounded-full
-                bg-pink-500
-                flex items-center justify-center
-                text-white
-                hover:scale-110
-                transition-transform
-              "
-              aria-label="Instagram"
+              className="w-11 h-11 rounded-full bg-pink-500 flex items-center justify-center hover:scale-110 transition-transform"
             >
               <FaInstagram />
             </a>
           </div>
         </motion.div>
+
+        {/* ================= CREDIT ================= */}
+        <div className="text-center">
+          <div className="inline-block bg-white/70 backdrop-blur px-6 py-3 rounded-full text-xs md:text-sm text-[#656176] border border-[#1B998B]/20">
+            Website crafted with 💜 by <strong>Komal Bavoria</strong> ·
+            <a
+              href="mailto:komalbavoria17@gmail.com"
+              className="ml-1 text-[#1B998B] font-semibold hover:underline"
+            >
+              komalbavoria17@gmail.com
+            </a>
+          </div>
+        </div>
 
       </div>
     </section>
