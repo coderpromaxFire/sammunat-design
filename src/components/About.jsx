@@ -208,17 +208,7 @@ export default function About() {
         </motion.div>
 
         {/* ================= CREDIT ================= */}
-        <div className="text-center">
-          <div className="inline-block bg-white/70 backdrop-blur px-6 py-3 rounded-full text-xs md:text-sm text-[#656176] border border-[#1B998B]/20">
-            Website crafted with care ·{" "}
-            <a
-              href="mailto:dev@sammunat.com"
-              className="text-[#1B998B] font-semibold hover:underline"
-            >
-             devstudio12@gmail.com
-            </a>
-          </div>
-        </div>
+     
 
       </div>
     </section>
