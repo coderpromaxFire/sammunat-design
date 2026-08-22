@@ -1,16 +1,89 @@
-# React + Vite
+# 🌐 Sammunat — Full-Stack Digital Services Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application developed for **Sammunat**, designed to provide a modern digital platform for showcasing services, managing users, handling authentication, and delivering a responsive web experience.
 
-Currently, two official plugins are available:
+The project combines a React/Vite frontend with dedicated backend services for application functionality and authentication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Live Application:**
 
-## Expanding the ESLint configuration
+https://sammunat-design.vercel.app/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📂 GitHub Repository
+
+https://github.com/coderpromaxFire/sammunat-design
+
+---
+
+## 📌 Overview
+
+Sammunat is a full-stack web application focused on providing users with a clean and responsive platform for accessing digital services.
+
+The application was developed with a modular architecture where the frontend communicates with backend services through APIs.
+
+The project includes separate backend components for core application functionality and authentication.
+
+---
+
+## ✨ Key Features
+
+### 🌐 Modern Web Interface
+
+- Responsive React-based UI
+- Modern and clean design
+- Responsive layouts
+- Component-based architecture
+- Interactive user experience
+
+### 🔐 Authentication
+
+Dedicated authentication backend for handling user authentication and related functionality.
+
+### 👤 User Management
+
+The application architecture supports user-related functionality through the backend services.
+
+### 🔄 Frontend–Backend Integration
+
+The React frontend communicates with backend services through APIs to retrieve and process application data.
+
+### 📱 Responsive Design
+
+The interface is designed to work across:
+
+- Desktop
+- Tablet
+- Mobile
+
+### ⚡ Modern Frontend Development
+
+Built using React and Vite for a fast development and build workflow.
+
+---
+
+## 🏗️ Architecture
+
+```text
+                    ┌──────────────────────┐
+                    │      React + Vite    │
+                    │       Frontend       │
+                    └──────────┬───────────┘
+                               │
+                               │ API Requests
+                               ▼
+              ┌────────────────────────────────┐
+              │          Backend Services      │
+              │                                │
+              │  ┌──────────────────────────┐  │
+              │  │   Sammunat Backend       │  │
+              │  └──────────────────────────┘  │
+              │                                │
+              │  ┌──────────────────────────┐  │
+              │  │ Authentication Backend   │  │
+              │  └──────────────────────────┘  │
+              └────────────────────────────────┘
